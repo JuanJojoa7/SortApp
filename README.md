@@ -2,10 +2,10 @@
 
 ## Autores
 
-* Juan Sebastian Gonzalez -
-* Juan Manuel Marin Angarita -
+* Juan Manuel Marin Angarita - A00382037
+* Óscar Andrés Gómez Lozano - A00394142
 * Juan Felipe Jojoa Crespo - A00382042
-* Oscar Gomez -
+* Juan Sebastian Gonzalez Sarmiento - A00371810
 
 # Implementación de Algoritmo de Ordenamiento Distribuido con Llamadas Asíncronas
 
