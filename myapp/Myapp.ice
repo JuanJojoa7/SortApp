@@ -1,7 +1,7 @@
 module Demo
 {
-    interface Printer
+    interface Order
     {
-        void printString(string s);
+        void sortList(list<int> numbers, int numServers);
     }
 }
