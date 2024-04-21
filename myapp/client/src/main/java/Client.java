@@ -5,7 +5,7 @@ public class Client {
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args)) {
             com.zeroc.Ice.ObjectPrx base = communicator.stringToProxy("SimpleOrder: tcp -h localhost -p 10000");
             Demo.OrderPrx order = Demo.OrderPrx.checkedCast(base);
-            if(printer == null) {
+            if(order == null) {
                 throw new Error("Invalid proxy");
             }
             Random random = new Random();

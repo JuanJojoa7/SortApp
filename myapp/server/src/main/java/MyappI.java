@@ -6,8 +6,6 @@ import java.util.concurrent.*;
 
 public class MyappI implements Demo.Order {
 
-    @Override
-    // New method to distribute workload among clients
     public void sortList(List<Integer> numbers, int numServers, Current current) {
         int listSize = numbers.size();
         int sublistSize = listSize / numServers;
@@ -45,6 +43,12 @@ public class MyappI implements Demo.Order {
         executor.shutdown();
 
         //sortFinalList(sortedSublists)
+    }
+
+    @Override
+    public void sortList(int[] numbers, int numServers, Current current) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'sortList'");
     }
 
     // public void sortFinalList(List<List<Integer>> numbers){ //compares first value and adds smallest to list until all numbers are in 1 list}

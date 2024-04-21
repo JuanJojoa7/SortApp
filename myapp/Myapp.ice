@@ -1,7 +1,8 @@
 module Demo
 {
+     sequence<int> IntList;
     interface Order
     {
-        void sortList(list<int> numbers, int numServers);
+        void sortList(IntList numbers, int numServers);
     }
 }
