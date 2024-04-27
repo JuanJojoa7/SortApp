@@ -12,29 +12,29 @@ public class MyappI implements Demo.Order {
     
         // Create an ExecutorService with a fixed thread pool size
         ExecutorService executor = Executors.newFixedThreadPool(numServers);
-        List<Future<List<Integer>>> futures = new ArrayList<>();
+        List<Future<Stack<Integer>>> futures = new ArrayList<>();
     
         // Distribute workload among connected clients
         for (int i = 0; i < numServers; i++) {
             final int startIndex = i * sublistSize;
             final int endIndex = Math.min((i + 1) * sublistSize, listSize);
     
-            // Submit a sorting task to the executor
-            Future<List<Integer>> future = executor.submit(() -> {
+           // Submit a sorting task to the executor
+           Future<Stack<Integer>> future = executor.submit(() -> {
                 List<Integer> sublist = new ArrayList<>();
                 for (int j = startIndex; j < endIndex; j++) {
                     sublist.add(numbers[j]);
                 }
                 Collections.sort(sublist); // Sort the sublist
-                return sublist;
+                return listaAStack(sublist);
             });
-    
-            futures.add(future); // Store the Future object for later retrieval
+
+            futures.add(future);
         }
     
         // Collect sorted sublists
-        List<List<Integer>> sortedSublists = new ArrayList<>();
-        for (Future<List<Integer>> future : futures) {
+        List<Stack<Integer>> sortedSublists = new ArrayList<>();
+        for (Future<Stack<Integer>> future : futures) {
             try {
                 sortedSublists.add(future.get()); // Retrieve the sorted sublist
             } catch (InterruptedException | ExecutionException e) {
@@ -46,17 +46,74 @@ public class MyappI implements Demo.Order {
         executor.shutdown();
     
         // Combine and sort the final list
-        List<Integer> sortedNumbers = new ArrayList<>();
-        for (List<Integer> sublist : sortedSublists) {
-            sortedNumbers.addAll(sublist);
-        }
-        Collections.sort(sortedNumbers);
-        // Use 'sortedNumbers' as the sorted result
+        sortFinalList(sortedSublists);
     }
 
    
 
-    // public void sortFinalList(List<List<Integer>> numbers){ //compares first value and adds smallest to list until all numbers are in 1 list}
+    public List<Integer> sortFinalList(List<Stack<Integer>> numbers){ 
+        //compares first value and adds smallest to list until all numbers are in 1 list
+        boolean end = false;
+        int last = 0;
+        List<Integer> OrderedList = new ArrayList<>();
+        while(end != true){
+            int min = encontrarMinimoEntrePilas(numbers);
+            for(int i=0; i<numbers.size()-1; i++){
+                if(numbers.get(i).peek() == min){
+                    OrderedList.add(numbers.get(i).pop());
+                    i=0;
+                }
+            }
+            for(int i=0; i<numbers.size()-1; i++){
+                if (numbers.get(i).empty()){
+                    last++;
+                }
+            }
+            if(last==numbers.size()){
+                end = true;
+            } else {
+                last = 0;
+            }
+        }
+        
+        return OrderedList;
+    }
+
+    public static Stack<Integer> listaAStack(List<Integer> lista) {
+        Stack<Integer> pila = new Stack<>();
+        // Agregar los elementos de la lista en orden inverso
+        for (int i = lista.size() - 1; i >= 0; i--) {
+            pila.push(lista.get(i));
+        }
+        return pila;
+    }
+
+     // Método para encontrar el valor mínimo entre las pilas
+    public static int encontrarMinimoEntrePilas(List<Stack<Integer>> pilas) {
+      if (pilas == null || pilas.isEmpty()) {
+         throw new IllegalArgumentException("La lista de pilas no puede estar vacía.");
+      }
+
+     int minValor = Integer.MAX_VALUE; // Inicializar el mínimo con el máximo valor entero posible
+
+      // Recorrer todas las pilas
+      for (Stack<Integer> pila : pilas) {
+         // Si la pila no está vacía, obtener el elemento en la cima
+           if (!pila.isEmpty()) {
+                int top = pila.peek();
+               if (top < minValor) {
+                   minValor = top;
+               }
+          } else { // Si la pila está vacía, verificar si el valor mínimo actual es mayor que Integer.MAX_VALUE
+              if (minValor == Integer.MAX_VALUE) {
+                 minValor = Integer.MIN_VALUE; // Asignar el valor mínimo entero posible si no se ha encontrado ningún elemento
+             }
+         }
+        }
+
+        return minValor;
+    }
+
 
     
 }

@@ -5,5 +5,6 @@ module Demo
     interface Order
     {
         void sortList(IntList numbers, int numServers);
+        void sortFinalList(SequenceOfIntLists numbers);
     }
 }
