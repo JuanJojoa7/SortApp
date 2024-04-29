@@ -30,7 +30,7 @@ public class Client {
                             
                         break;
                     case 3:
-
+                        sortProxy.divideFile(1);
                         break;
                     case 4:
                         System.out.println("Exiting...");

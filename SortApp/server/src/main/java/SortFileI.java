@@ -2,8 +2,11 @@ import com.zeroc.Ice.Current;
 import Sorting.*;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -76,13 +79,45 @@ public class SortFileI implements SortFile {
     @Override
     public String[] sortFileList(String[] strings, Current current) {
         // Sort file implementation
-        throw new UnsupportedOperationException("Unimplemented method 'sortFileList'");
+        //throw new UnsupportedOperationException("Unimplemented method 'sortFileList'");
+        for(int i = 0; i<strings.length; i++){
+            //Collections.sort(strings);
+        }
+
+        return strings;
     }
 
     @Override
     public String[][] divideFile(int parts, Current current) {
         // Divide file implementation
-        throw new UnsupportedOperationException("Unimplemented method 'divideFile'");
+        List<String> stringList = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Split the line by the comma delimiter
+                String[] divs = line.split(",");
+                for (String div : divs) {
+                    stringList.add(div.trim()); // Trim any leading/trailing spaces
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (String str : stringList) {
+            System.out.println(str);
+        }
+
+        String[][] Nlist = new String[stringList.size()][1];
+        for (int i = 0; i < stringList.size(); i++) {
+            Nlist[i][0] = stringList.get(i);
+        }
+
+        return Nlist;
+
+        //throw new UnsupportedOperationException("Unimplemented method 'divideFile'");
+
     }
 
     
