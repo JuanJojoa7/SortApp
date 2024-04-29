@@ -80,9 +80,7 @@ public class SortFileI implements SortFile {
     public String[] sortFileList(String[] strings, Current current) {
         // Sort file implementation
         //throw new UnsupportedOperationException("Unimplemented method 'sortFileList'");
-        for(int i = 0; i<strings.length; i++){
-            //Collections.sort(strings);
-        }
+        quicksort(strings, 0, strings.length-1);
 
         return strings;
     }
@@ -105,17 +103,15 @@ public class SortFileI implements SortFile {
             e.printStackTrace();
         }
 
-        for (String str : stringList) {
-            System.out.println(str);
-        }
-
-        String[][] Nlist = new String[stringList.size()][1];
-        for (int i = 0; i < stringList.size(); i++) {
-            Nlist[i][0] = stringList.get(i);
+        String[][] Nlist = new String[stringList.size()][parts];
+        int divs = stringList.size()/parts;
+        for (int i = 0; i < parts; i++) {
+            for(int j = 0; j < divs; j++){
+                Nlist[j][i] = stringList.get(j+(divs*i)); 
+            }
         }
 
         return Nlist;
-
         //throw new UnsupportedOperationException("Unimplemented method 'divideFile'");
 
     }
