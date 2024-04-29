@@ -1,7 +1,10 @@
 module Sorting {
+    sequence<string> StringSeq;
+    sequence<StringSeq> StringSeqSeq;
+
     interface SortFile {
-        void uploadFile();
-        void sendDataBlocks();
-        void sortFinalList();
+        bool createFile();
+        StringSeq sortFileList(StringSeq strings);
+        StringSeqSeq divideFile(int parts);
     }
 }
