@@ -80,12 +80,46 @@ public class SortFileI implements SortFile {
     public String[] sortFileList(String[] strings, Current current) {
         // Sort file implementation
         //throw new UnsupportedOperationException("Unimplemented method 'sortFileList'");
-        quicksort(strings, 0, strings.length-1);
+        strings = mergeSort(strings);
         return strings;
     }
 
-
     
+    private void mergeSort(List<String> arr) {
+        if (arr.size() <= 1) {
+            return;
+        }
+
+        int mid = arr.size() / 2;
+        List<String> leftHalf = arr.subList(0, mid);
+        List<String> rightHalf = arr.subList(mid, arr.size());
+
+        mergeSort(leftHalf);
+        mergeSort(rightHalf);
+
+        merge(arr, leftHalf, rightHalf);
+    }
+
+    private void merge(List<String> arr, List<String> left, List<String> right) {
+        int leftIndex = 0, rightIndex = 0, arrIndex = 0;
+
+        while (leftIndex < left.size() && rightIndex < right.size()) {
+            if (left.get(leftIndex).compareTo(right.get(rightIndex)) < 0) {
+                arr.set(arrIndex++, left.get(leftIndex++));
+            } else {
+                arr.set(arrIndex++, right.get(rightIndex++));
+            }
+        }
+
+        while (leftIndex < left.size()) {
+            arr.set(arrIndex++, left.get(leftIndex++));
+        }
+
+        while (rightIndex < right.size()) {
+            arr.set(arrIndex++, right.get(rightIndex++));
+        }
+    }
+
 
     @Override
     public String[][] divideFile(int parts, Current current) {
