@@ -157,6 +157,15 @@ public class SortFileI implements SortFile {
 
     }
 
-    
+    private static int connectionCount = 0;
 
+    @Override
+    public String register(Current current) {
+        connectionCount++;
+        if (connectionCount >= 2) {
+            return "Recibido";
+        } else {
+            return "Esperando más conexiones";
+        }
+    }
 }
