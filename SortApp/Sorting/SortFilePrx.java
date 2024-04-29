@@ -134,22 +134,22 @@ public interface SortFilePrx extends com.zeroc.Ice.ObjectPrx
         return f;
     }
 
-    default String register()
+    default void register()
     {
-        return register(com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        register(com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default String register(java.util.Map<String, String> context)
+    default void register(java.util.Map<String, String> context)
     {
-        return _iceI_registerAsync(context, true).waitForResponse();
+        _iceI_registerAsync(context, true).waitForResponse();
     }
 
-    default java.util.concurrent.CompletableFuture<java.lang.String> registerAsync()
+    default java.util.concurrent.CompletableFuture<Void> registerAsync()
     {
         return _iceI_registerAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<java.lang.String> registerAsync(java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<Void> registerAsync(java.util.Map<String, String> context)
     {
         return _iceI_registerAsync(context, false);
     }
@@ -160,14 +160,10 @@ public interface SortFilePrx extends com.zeroc.Ice.ObjectPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<java.lang.String> _iceI_registerAsync(java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_registerAsync(java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<java.lang.String> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "register", null, sync, null);
-        f.invoke(true, context, null, null, istr -> {
-                     String ret;
-                     ret = istr.readString();
-                     return ret;
-                 });
+        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "register", null, sync, null);
+        f.invoke(false, context, null, null, null);
         return f;
     }
 

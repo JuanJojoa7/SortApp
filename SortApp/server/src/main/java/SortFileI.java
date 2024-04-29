@@ -160,12 +160,12 @@ public class SortFileI implements SortFile {
     private static int connectionCount = 0;
 
     @Override
-    public String register(Current current) {
+    public void register(Current current) {
         connectionCount++;
         if (connectionCount >= 2) {
-            return "Recibido";
+            System.out.println("Received connection from a client. Ready to process requests.");
         } else {
-            return "Esperando más conexiones";
+            System.out.println("Waiting for another client to connect.");
         }
     }
 }

@@ -5,12 +5,15 @@ public class Client {
     public static Scanner input = new Scanner(System.in);
     public static void main(String[] args) {
         try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args)) {
-            com.zeroc.Ice.ObjectPrx base = communicator.stringToProxy("SortingFile:tcp -h localhost -p 10000");
+            com.zeroc.Ice.ObjectPrx base = communicator.stringToProxy("SortingFile:tcp -h 192.168.39.144 -p 10000");
             Sorting.SortFilePrx sortProxy = Sorting.SortFilePrx.checkedCast(base);
             if(sortProxy == null) {
                 throw new Error("Invalid proxy");
             }
-            
+
+            sortProxy.register();
+
+            /**
             int option;
             do {
                 option = showMenu();
@@ -40,6 +43,7 @@ public class Client {
                         break;
                 }
             } while(option != 4);
+            */
         }
     }
 

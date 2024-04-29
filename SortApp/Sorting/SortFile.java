@@ -23,7 +23,7 @@ public interface SortFile extends com.zeroc.Ice.Object
 
     String[][] divideFile(int parts, com.zeroc.Ice.Current current);
 
-    String register(com.zeroc.Ice.Current current);
+    void register(com.zeroc.Ice.Current current);
 
     /** @hidden */
     static final String[] _iceIds =
@@ -120,11 +120,8 @@ public interface SortFile extends com.zeroc.Ice.Object
     {
         com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
         inS.readEmptyParams();
-        String ret = obj.register(current);
-        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
-        ostr.writeString(ret);
-        inS.endWriteParams(ostr);
-        return inS.setResult(ostr);
+        obj.register(current);
+        return inS.setResult(inS.writeEmptyParams());
     }
 
     /** @hidden */
