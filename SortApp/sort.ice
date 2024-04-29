@@ -6,6 +6,7 @@ module Sorting {
         bool createFile();
         StringSeq sortFileList(StringSeq strings);
         StringSeqSeq divideFile(int parts);
-        void register();
+        string register();
+        void waitForAllClients();
     }
 }

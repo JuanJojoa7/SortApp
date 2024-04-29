@@ -11,7 +11,9 @@ public class Client {
                 throw new Error("Invalid proxy");
             }
 
-            sortProxy.register();
+            System.out.println(sortProxy.register());
+            sortProxy.waitForAllClients();
+            System.out.println("All clients connected");
 
             /**
             int option;

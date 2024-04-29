@@ -134,22 +134,22 @@ public interface SortFilePrx extends com.zeroc.Ice.ObjectPrx
         return f;
     }
 
-    default void register()
+    default String register()
     {
-        register(com.zeroc.Ice.ObjectPrx.noExplicitContext);
+        return register(com.zeroc.Ice.ObjectPrx.noExplicitContext);
     }
 
-    default void register(java.util.Map<String, String> context)
+    default String register(java.util.Map<String, String> context)
     {
-        _iceI_registerAsync(context, true).waitForResponse();
+        return _iceI_registerAsync(context, true).waitForResponse();
     }
 
-    default java.util.concurrent.CompletableFuture<Void> registerAsync()
+    default java.util.concurrent.CompletableFuture<java.lang.String> registerAsync()
     {
         return _iceI_registerAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
     }
 
-    default java.util.concurrent.CompletableFuture<Void> registerAsync(java.util.Map<String, String> context)
+    default java.util.concurrent.CompletableFuture<java.lang.String> registerAsync(java.util.Map<String, String> context)
     {
         return _iceI_registerAsync(context, false);
     }
@@ -160,9 +160,46 @@ public interface SortFilePrx extends com.zeroc.Ice.ObjectPrx
      * @param sync -
      * @return -
      **/
-    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_registerAsync(java.util.Map<String, String> context, boolean sync)
+    default com.zeroc.IceInternal.OutgoingAsync<java.lang.String> _iceI_registerAsync(java.util.Map<String, String> context, boolean sync)
     {
-        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "register", null, sync, null);
+        com.zeroc.IceInternal.OutgoingAsync<java.lang.String> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "register", null, sync, null);
+        f.invoke(true, context, null, null, istr -> {
+                     String ret;
+                     ret = istr.readString();
+                     return ret;
+                 });
+        return f;
+    }
+
+    default void waitForAllClients()
+    {
+        waitForAllClients(com.zeroc.Ice.ObjectPrx.noExplicitContext);
+    }
+
+    default void waitForAllClients(java.util.Map<String, String> context)
+    {
+        _iceI_waitForAllClientsAsync(context, true).waitForResponse();
+    }
+
+    default java.util.concurrent.CompletableFuture<Void> waitForAllClientsAsync()
+    {
+        return _iceI_waitForAllClientsAsync(com.zeroc.Ice.ObjectPrx.noExplicitContext, false);
+    }
+
+    default java.util.concurrent.CompletableFuture<Void> waitForAllClientsAsync(java.util.Map<String, String> context)
+    {
+        return _iceI_waitForAllClientsAsync(context, false);
+    }
+
+    /**
+     * @hidden
+     * @param context -
+     * @param sync -
+     * @return -
+     **/
+    default com.zeroc.IceInternal.OutgoingAsync<Void> _iceI_waitForAllClientsAsync(java.util.Map<String, String> context, boolean sync)
+    {
+        com.zeroc.IceInternal.OutgoingAsync<Void> f = new com.zeroc.IceInternal.OutgoingAsync<>(this, "waitForAllClients", null, sync, null);
         f.invoke(false, context, null, null, null);
         return f;
     }

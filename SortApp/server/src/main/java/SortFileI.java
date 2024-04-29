@@ -21,6 +21,7 @@ public class SortFileI implements SortFile {
     private static final int TARGET_SIZE_MB = 2;
     private static final String FILE_NAME = "server/src/main/resources/randomStrings.txt";
     private static final char[] CHARACTERS = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+    private static final int TOTAL_CLIENTS = 2;
 
     /**
      * Create a file with random strings
@@ -160,12 +161,25 @@ public class SortFileI implements SortFile {
     private static int connectionCount = 0;
 
     @Override
-    public void register(Current current) {
+    public String register(Current current) {
         connectionCount++;
-        if (connectionCount >= 2) {
-            System.out.println("Received connection from a client. Ready to process requests.");
-        } else {
-            System.out.println("Waiting for another client to connect.");
+        if (connectionCount >= TOTAL_CLIENTS) {
+            notifyAll();
+            System.out.println("All clients connected.");
+        }
+        String message = connectionCount >= TOTAL_CLIENTS ? "Recibido" : "Esperando más conexiones";
+        System.out.println(message);
+        return message;
+    }
+
+    @Override
+    public synchronized void waitForAllClients(Current current) {
+        while (connectionCount < TOTAL_CLIENTS) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
     }
 }
