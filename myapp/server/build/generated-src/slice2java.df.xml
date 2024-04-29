@@ -1,0 +1,13 @@
+<state>
+  <timestamp value='1714417253162' />
+  <sourceSet name='default'>
+    <source name='D:\Quinto Semestre\Compunet 1\TalkingApp-V2\myapp\Myapp.ice'>
+      <file name='D:\Quinto Semestre\Compunet 1\TalkingApp-V2\myapp\server\build\generated-src\Demo\Order.java' />
+      <file name='D:\Quinto Semestre\Compunet 1\TalkingApp-V2\myapp\server\build\generated-src\Demo\SequenceOfIntListsHelper.java' />
+      <file name='D:\Quinto Semestre\Compunet 1\TalkingApp-V2\myapp\server\build\generated-src\Demo\OrderPrx.java' />
+      <file name='D:\Quinto Semestre\Compunet 1\TalkingApp-V2\myapp\server\build\generated-src\Demo\_OrderPrxI.java' />
+    </source>
+    <arg value='C:\Program Files\ZeroC\Ice-3.7.10\\bin\slice2java.exe' />
+    <arg value='-IC:\Program Files\ZeroC\Ice-3.7.10\\slice' />
+  </sourceSet>
+</state>
