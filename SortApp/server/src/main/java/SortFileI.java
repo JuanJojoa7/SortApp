@@ -81,9 +81,11 @@ public class SortFileI implements SortFile {
         // Sort file implementation
         //throw new UnsupportedOperationException("Unimplemented method 'sortFileList'");
         quicksort(strings, 0, strings.length-1);
-
         return strings;
     }
+
+
+    
 
     @Override
     public String[][] divideFile(int parts, Current current) {
