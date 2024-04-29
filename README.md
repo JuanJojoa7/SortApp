@@ -7,6 +7,10 @@
 * Juan Felipe Jojoa Crespo - A00382042
 * Juan Sebastian Gonzalez Sarmiento - A00371810
 
+# Recursos del proyecto
+
+i.[Informe del proyecto](poner URL de github aqui)
+
 # Implementación de Algoritmo de Ordenamiento Distribuido con Llamadas Asíncronas
 
 Este repositorio contiene la implementación de un algoritmo de ordenamiento distribuido utilizando llamadas asíncronas en el contexto de ICE (Internet Communications Engine). La tarea fue asignada como parte de un proyecto académico para explorar y desarrollar sistemas distribuidos eficientes.
