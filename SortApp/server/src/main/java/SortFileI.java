@@ -163,23 +163,20 @@ public class SortFileI implements SortFile {
     @Override
     public String register(Current current) {
         connectionCount++;
-        if (connectionCount >= TOTAL_CLIENTS) {
-            notifyAll();
-            System.out.println("All clients connected.");
-        }
-        String message = connectionCount >= TOTAL_CLIENTS ? "Recibido" : "Esperando más conexiones";
+        String message = connectionCount >= TOTAL_CLIENTS ? "Recibido" : "Waiting for all clients to connect...";
         System.out.println(message);
         return message;
     }
 
     @Override
-    public synchronized void waitForAllClients(Current current) {
+    public void waitForAllClients(Current current) {
         while (connectionCount < TOTAL_CLIENTS) {
             try {
-                wait();
+                Thread.sleep(100);
             } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
+                e.printStackTrace();
             }
         }
+        System.out.println("All clients connected");
     }
 }
