@@ -1,4 +1,4 @@
-# TalkingApp-V2
+# SortApp
 
 ## Autores
 
@@ -6,6 +6,10 @@
 * Óscar Andrés Gómez Lozano - A00394142
 * Juan Felipe Jojoa Crespo - A00382042
 * Juan Sebastian Gonzalez Sarmiento - A00371810
+
+# Recursos del proyecto
+
+i.[Informe Final](https://github.com/JuanJojoa7/TalkingApp-V2/blob/main/docs/Informe%20Final.md)
 
 # Implementación de Algoritmo de Ordenamiento Distribuido con Llamadas Asíncronas
 
@@ -17,22 +21,6 @@ El objetivo de esta tarea es diseñar e implementar un algoritmo de ordenamiento
 
 ## Contenido del Repositorio
 
-- **myapp/**: Contiene el código fuente de la implementación en Java.
+- **SortApp/**: Contiene el código fuente de la implementación en Java.
 - **docs/**: Incluye documentación adicional, como el informe final y cualquier otro material relevante.
 - **README.md**: Proporciona información básica sobre el proyecto, instrucciones de instalación y uso, así como enlaces a recursos adicionales.
-
-## Estructura del Código Fuente
-
-El código fuente está organizado de la siguiente manera:
-
-- **Main.java**: El punto de entrada del programa que inicializa los nodos y coordina la distribución de tareas.
-- **SortAlgorithm.java**: Contiene la implementación del algoritmo de ordenamiento distribuido.
-- **Node.java**: Representa un nodo en la red que participa en el proceso de ordenamiento distribuido.
-- **ICECommunicator.java**: Maneja la comunicación entre los nodos utilizando ICE.
-
-## Instrucciones de Uso
-
-1. Clona este repositorio en tu máquina local.
-2. Importa el proyecto en tu entorno de desarrollo Java preferido.
-3. Ejecuta el programa principal (Main.java) y sigue las instrucciones para probar el algoritmo de ordenamiento distribuido.
-4. Consulta el informe en la carpeta **docs/** para obtener más detalles sobre la estrategia de distribución, los resultados de las pruebas y el análisis de rendimiento.
