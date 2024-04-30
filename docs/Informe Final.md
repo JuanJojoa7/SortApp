@@ -101,5 +101,14 @@ Cómo se relaciona con las clases `Client.java`, `Server.java` y `SortFileI.java
 
 1. Clona este repositorio en tu máquina local.
 2. Importa el proyecto en tu entorno de desarrollo Java preferido.
-3. Ejecuta el programa principal (Main.java) y sigue las instrucciones para probar el algoritmo de ordenamiento distribuido.
-4. Consulta el informe en la carpeta **docs/** para obtener más detalles sobre la estrategia de distribución, los resultados de las pruebas y el análisis de rendimiento.
+Aquí están los pasos pulidos para ejecutar el programa:
+
+3. **Inicializar los servidores**: Inicie cada servidor que actuará como un trabajador en el programa de ordenamiento. Asegúrese de asignar a cada servidor un puerto único que no esté en uso, en el rango de 10000 en adelante.
+
+4. **Ejecutar el cliente**: Una vez que todos los servidores estén en funcionamiento, inicie el cliente. Durante la inicialización, el cliente le pedirá que introduzca los puertos que los servidores están utilizando.
+
+5. **Crear un archivo de ordenamiento**: El cliente le preguntará si desea crear un nuevo archivo para ordenar. Si elige hacerlo, deberá especificar el tamaño del archivo en megabytes (MB). Si elige no crear un nuevo archivo, el sistema buscará un archivo existente para ordenar.
+
+6. **Ordenar el archivo**: El sistema creará el archivo (si eligió hacerlo) y luego procederá a ordenarlo utilizando los servidores que ha inicializado.
+
+7. **Confirmación de la ordenación**: Una vez que el archivo ha sido ordenado, el sistema le informará que la ordenación se ha completado con éxito. También le proporcionará la ubicación del archivo ordenado en el directorio y el tiempo que tardó en ordenarlo.
