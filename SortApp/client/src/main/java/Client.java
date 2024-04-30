@@ -19,7 +19,6 @@ public class Client {
     private static final int TARGET_SIZE_MB = 100;
     private static final String FILE_NAME = "server/src/main/resources/randomStrings.txt";
     private static final char[] CHARACTERS = "abcdefghijklmnopqrstuvwxyz".toCharArray();
-    // Time elapsed
     private static long startTime;
 
     public static void main(String[] args) {
@@ -51,17 +50,47 @@ public class Client {
             }
         }
 
+        System.out.println("Ordenando sin hilos...");
+
+        // Load the file
+        List<String> stringList = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // Split the line by the comma delimiter
+                String[] divs = line.split(",");
+                for (String div : divs) {
+                    stringList.add(div.trim());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Sort list of strings
+        String[] strings = stringList.toArray(new String[0]);
+        startTime = System.currentTimeMillis();
+        mergeSort(strings);
+        System.out.println("Archivo ordenado. Tiempo utilizado: " + (System.currentTimeMillis() - startTime) + "ms");
+
+        // Save the sorted strings to a file
+        saveFile(strings, 1);
+
+        System.out.println("Archivo guardado.");
+
+        System.out.println("Ordenando archivo con hilos...");
+
         // Charge parts
-        System.out.println("Cargando archivo...");
+        System.out.println("Dividiendo partes...");
         List<String[]> lists = divideFile();
 
         List<String[]> dividedStrings = new ArrayList<>();
 
         List<Thread> threads = new ArrayList<>();
 
-        startTime = System.currentTimeMillis();
-
         BlockingQueue<String[]> queue = new LinkedBlockingQueue<>(lists);
+
+        startTime = System.currentTimeMillis();
 
         for (int port : ports) {
             Thread thread = new Thread(new Runnable() {
@@ -80,8 +109,9 @@ public class Client {
                                 break;
                             }
 
-                            System.out.println("Sorting file using server on port " + port);
-                            System.out.println("Length: " + stringsToSort.length);
+                            // System.out.println("Sorting file using server on port " + port);
+                            // System.out.println("Length: " + stringsToSort.length);
+
                             String[] sortedStrings = sortProxy.sortFileList(stringsToSort);
 
                             dividedStrings.add(sortedStrings);
@@ -105,18 +135,16 @@ public class Client {
             }
         }
 
-        System.out.println("Archivo ordenado");
-        
         // Merge the divided strings
         String[] sortedStrings = sortFileList(dividedStrings);
 
         // Print the time elapsed
-        System.out.println("Tiempo utilizado: " + (System.currentTimeMillis() - startTime) + "ms");
+        System.out.println("Archivo ordenado. Tiempo utilizado: " + (System.currentTimeMillis() - startTime) + "ms");
 
         // Save the sorted strings to a file
-        saveFile(sortedStrings);
+        saveFile(sortedStrings, 2);
 
-        System.out.println("Archivo guardado");
+        System.out.println("Archivo guardado.");
     }
 
     /**
@@ -253,8 +281,8 @@ public class Client {
         }
     }
 
-    private static void saveFile(String[] strings) {
-        try (FileWriter writer = new FileWriter("server/src/main/resources/sortedStrings.txt")) {
+    private static void saveFile(String[] strings, int number) {
+        try (FileWriter writer = new FileWriter("server/src/main/resources/sortedStrings" + number + ".txt")) {
             for (String string : strings) {
                 writer.write(string + ",");
             }

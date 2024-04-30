@@ -9,7 +9,9 @@ public class SortFileI implements SortFile {
 
     @Override
     public String[] sortFileList(String[] strings, Current current) {
+        System.out.println("Received a list of strings...");
         strings = mergeSort(strings);
+        System.out.println("List of strings sorted");
         return strings;
     }
     
