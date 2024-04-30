@@ -32,7 +32,21 @@ El código fuente está organizado de la siguiente manera:
 
 Tambien se relaciona con la clase `Client.java`, el cliente se conecta a este servidor a través del puerto especificado y le envía cadenas de texto para que las ordene. El servidor recibe las cadenas, las ordena y las devuelve al cliente. En resumen, esta clase implementa un servidor que recibe cadenas de texto de un cliente, las ordena y las devuelve al cliente.
 
-- **Node.java**: Representa un nodo en la red que participa en el proceso de ordenamiento distribuido.
+## **SortFileI.java**:
+  La clase `SortFileI` implementa la interfaz `SortFile` y define cómo se deben ordenar las cadenas de texto que recibe del cliente. Aquí está lo que hace cada parte del código:
+
+1. **sortFileList**: Este método toma un array de cadenas de texto y las ordena utilizando el algoritmo de ordenamiento por mezcla (merge sort). Luego, devuelve el array ordenado.
+
+2. **mergeSort**: Este es un método recursivo que implementa el algoritmo de ordenamiento por mezcla. Divide el array en dos mitades, las ordena por separado y luego las combina.
+
+3. **merge**: Este método toma dos arrays ordenados y los combina en un solo array ordenado.
+
+Cómo se relaciona con las clases `Client.java` y `Server.java`:
+
+- `Client.java`: El cliente envía un array de cadenas de texto al servidor para que lo ordene. El servidor utiliza la implementación de `SortFileI` para ordenar las cadenas.
+
+- `Server.java`: El servidor recibe el array de cadenas de texto del cliente y utiliza la implementación de `SortFileI` para ordenar las cadenas. Luego, devuelve el array ordenado al cliente.
+  
 - **ICECommunicator.java**: Maneja la comunicación entre los nodos utilizando ICE.
 
 ## Instrucciones de Uso
