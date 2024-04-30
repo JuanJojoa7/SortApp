@@ -13,6 +13,8 @@ i.[Informe Final](https://github.com/JuanJojoa7/TalkingApp-V2/blob/main/docs/Inf
 
 ii.[Estructura del codigo fuente](https://github.com/JuanJojoa7/TalkingApp-V2/blob/main/docs/Estructura%20del%20codigo%20fuente.md)
 
+iii.[Instrucciones de uso](https://github.com/JuanJojoa7/TalkingApp-V2/blob/main/docs/Instrucciones%20de%20uso.md)
+
 # Implementación de Algoritmo de Ordenamiento Distribuido con Llamadas Asíncronas
 
 Este repositorio contiene la implementación de un algoritmo de ordenamiento distribuido utilizando llamadas asíncronas en el contexto de ICE (Internet Communications Engine). La tarea fue asignada como parte de un proyecto académico para explorar y desarrollar sistemas distribuidos eficientes.
