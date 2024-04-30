@@ -17,7 +17,7 @@ subprojects {
     // Both Client and Server projects share the Printer.ice Slice definitions
     slice {
         java {
-            files = [file("../Myapp.ice")]
+            files = [file("../sort.ice")]
         }
     }
     
