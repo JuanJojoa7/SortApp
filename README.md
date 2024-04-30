@@ -21,7 +21,7 @@ El objetivo de esta tarea es diseñar e implementar un algoritmo de ordenamiento
 
 ## Contenido del Repositorio
 
-- **src/**: Contiene el código fuente de la implementación en Java.
+- **SortApp/**: Contiene el código fuente de la implementación en Java.
 - **docs/**: Incluye documentación adicional, como el informe final y cualquier otro material relevante.
 - **README.md**: Proporciona información básica sobre el proyecto, instrucciones de instalación y uso, así como enlaces a recursos adicionales.
 
