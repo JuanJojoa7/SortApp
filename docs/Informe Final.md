@@ -1,5 +1,14 @@
 # Informe Final
 
+## De donde partimos
+  El proyecto comenzó con la identificación de la necesidad de un sistema distribuido para ordenar grandes conjuntos de datos, específicamente listas de cadenas de texto. Dada la naturaleza distribuida y la escala de los datos, se decidió utilizar un algoritmo de ordenamiento eficiente, el merge sort, que es conocido por su eficiencia en el manejo de grandes conjuntos de datos y su capacidad para realizar ordenamientos externos.
+
+Para implementar la comunicación entre los nodos en el sistema distribuido, se decidió utilizar Ice (Internet Communications Engine), un middleware de comunicaciones robusto y eficiente. Ice permite la comunicación transparente entre los nodos y maneja los detalles de bajo nivel de la comunicación en red, lo que nos permitió centrarnos en la lógica de la aplicación.
+
+Se definió una interfaz, `SortFile`, utilizando el lenguaje de definición de interfaz (IDL) de Ice. Esta interfaz define un método `sortFileList` que toma una secuencia de cadenas y devuelve una secuencia de cadenas ordenada. Esta interfaz se utiliza para la comunicación entre el cliente y el servidor en el sistema.
+
+Para la construcción y gestión del proyecto, se utilizó Gradle, una herramienta de automatización de construcción potente y flexible. Gradle se encargó de las tareas como la compilación del código, la gestión de las dependencias (incluyendo la dependencia de Ice), y la ejecución de la aplicación.
+
 ## Importancia del ICE y Gradle en el desarrollo del proyecto: Sort.ice: 
   Definimos una interfaz `SortFile` en el módulo `Sorting` usando el lenguaje de definición de interfaz (IDL) de Ice. Esta interfaz define un método `sortFileList` que toma una secuencia de cadenas (`StringSeq`) y devuelve una secuencia de cadenas.
 
