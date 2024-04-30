@@ -61,13 +61,11 @@ El código fuente está organizado de la siguiente manera:
 Además, la clase `Client` utiliza una cola de bloqueo (`BlockingQueue`) para almacenar las partes del archivo. Cada hilo toma una parte de la cola, la ordena y luego la agrega a la lista `dividedStrings`.
   
 ## **Server.java**:
-  La clase `Server` en este código es una implementación de un servidor que recibe cadenas de texto de un cliente para ordenarlas. Aquí está lo que hace cada parte del código:
+  La clase `Server` en este código es un servidor que se ejecuta en un puerto específico y espera las solicitudes de los clientes para ordenar las cadenas de texto. Aquí está la explicación detallada:
 
-1. **Variables**: Define un `Scanner` para la entrada del usuario y una variable `port` para almacenar el número de puerto en el que se ejecutará el servidor.
+- `main(String[] args)`: Este es el método principal que se ejecuta cuando se inicia el servidor. Primero, solicita al usuario que ingrese el número de puerto en el que se ejecutará el servidor. Luego, inicializa el comunicador Ice, que es responsable de la creación de adaptadores de objetos y proxies, y la gestión de la comunicación de red. Después de eso, crea un adaptador de objeto con el nombre "SortingFileAdapter" y lo configura para escuchar en el puerto especificado. Luego, crea un objeto de la clase `SortFileI` y lo agrega al adaptador con la identidad "SortingFile". Después de activar el adaptador, el servidor espera a que se cierre.
 
-2. **Método main**: En el método `main`, se le pide al usuario que introduzca el número de puerto en el que se ejecutará el servidor. Luego, se inicializa un comunicador Ice, que es un objeto que proporciona servicios para la comunicación en red, la gestión de hilos, la gestión de la memoria, etc. Se crea un adaptador de objetos con el comunicador, que se utiliza para recibir peticiones de los clientes. Se crea un objeto `SortFileI` y se añade al adaptador con una identidad única. Luego, se activa el adaptador y se espera a que el comunicador se cierre.
-
-Tambien se relaciona con la clase `Client.java`, el cliente se conecta a este servidor a través del puerto especificado y le envía cadenas de texto para que las ordene. El servidor recibe las cadenas, las ordena y las devuelve al cliente. En resumen, esta clase implementa un servidor que recibe cadenas de texto de un cliente, las ordena y las devuelve al cliente.
+La relación entre la clase `Server` y la clase `Client` es que el cliente se conecta a este servidor para ordenar las cadenas de texto. El cliente divide el archivo en partes más pequeñas y envía cada parte a un servidor diferente para que la ordene. Una vez que todas las partes están ordenadas, el cliente las combina y las ordena de nuevo. Por lo tanto, el servidor es responsable de ordenar una parte del archivo, mientras que el cliente es responsable de dividir el archivo, enviar las partes a los servidores, combinar las partes ordenadas y ordenarlas de nuevo.
 
 ## **SortFileI.java**:
   La clase `SortFileI` implementa la interfaz `SortFile` y define cómo se deben ordenar las cadenas de texto que recibe del cliente. Aquí está lo que hace cada parte del código:
