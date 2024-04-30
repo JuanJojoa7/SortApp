@@ -54,7 +54,7 @@ El código fuente está organizado de la siguiente manera:
 
 - `saveFile(String[] strings)`: Este método guarda las cadenas ordenadas en un archivo.
 
-La relación entre la clase `Client` y las clases `Settings`, `Server` y `SortFileI` podría ser que `Client` utiliza la configuración proporcionada por `Settings` para establecer la conexión con los servidores. `Client` envía las partes del archivo a `Server` para su ordenación. `Server` implementa la interfaz `SortFileI` para proporcionar el servicio de ordenación. Sin embargo, sin ver el código completo de `Settings`, `Server` y `SortFileI`, no puedo confirmar exactamente cómo interactúan con `Client`.
+La relación entre la clase `Client` y las clases `Settings`, `Server` y `SortFileI` podría ser que `Client` utiliza la configuración proporcionada por `Settings` para establecer la conexión con los servidores. `Client` envía las partes del archivo a `Server` para su ordenación. `Server` implementa la interfaz `SortFileI` para proporcionar el servicio de ordenación. 
   
 ## **Server.java**:
   La clase `Server` en este código es un servidor que se ejecuta en un puerto específico y espera las solicitudes de los clientes para ordenar las cadenas de texto. Aquí está la explicación detallada:
