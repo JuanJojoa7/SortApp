@@ -87,7 +87,7 @@ La relación entre la clase `SortFileI` y las clases `Client` y `Server` es que 
 
 - `setPort(int port)`: Este método es un setter para la variable de instancia `port`. Establece el puerto.
 
-La relación entre la clase `Settings` y las clases `Client`, `Server` y `SortFileI` podría ser que `Settings` proporciona la configuración que `Client` y `Server` utilizan para establecer la conexión. Por ejemplo, `Client` podría utilizar el número de nodos para determinar cuántos servidores se deben conectar y el puerto para establecer la conexión. `Server` podría utilizar el puerto para escuchar las solicitudes entrantes. Sin embargo, sin ver el código completo de `Client` y `Server`, no puedo confirmar exactamente cómo utilizan la clase `Settings`. La clase `SortFileI` probablemente no interactúa directamente con `Settings`, ya que su responsabilidad es ordenar las cadenas de texto.
+La relación entre la clase `Settings` y las clases `Client`, `Server` y `SortFileI` podría ser que `Settings` proporciona la configuración que `Client` y `Server` utilizan para establecer la conexión. Por ejemplo, `Client` podría utilizar el número de nodos para determinar cuántos servidores se deben conectar y el puerto para establecer la conexión. `Server` podría utilizar el puerto para escuchar las solicitudes entrantes. 
   
 ## Instrucciones de Uso
 
