@@ -33,32 +33,28 @@ Por otro lado, otros algoritmos de ordenamiento pueden no ser adecuados por vari
 
 Por lo tanto, dado el contexto de este sistema, merge sort parece ser la elección más adecuada.
 
-
-
 ## Estructura del Código Fuente
 
 El código fuente está organizado de la siguiente manera:
 
 ## **Client.java**:
-  La clase `Client` en este código es un cliente que se conecta a varios servidores para ordenar cadenas de texto. Aquí está la explicación detallada de cada método:
+  La clase `Client` en este código es la clase principal que coordina la creación de un archivo de cadenas aleatorias, la división de este archivo en partes, el envío de estas partes a varios servidores para su ordenación, y finalmente la combinación de las cadenas ordenadas en un solo archivo. Aquí está la explicación detallada de cada método:
 
-- `main(String[] args)`: Este es el método principal que se ejecuta cuando se inicia el programa. Primero, solicita al usuario que agregue servidores proporcionando los números de puerto. Luego, pregunta al usuario si desea crear un archivo de números. Si la respuesta es sí, se llama al método `createFile()`. Después de eso, el archivo se divide en partes más pequeñas con el método `divideFile()`. Luego, se inician hilos para cada servidor y se les asigna una parte del archivo para ordenar. Una vez que todos los hilos han terminado, las cadenas ordenadas se combinan y se ordenan nuevamente. Finalmente, las cadenas ordenadas se guardan en un archivo.
+- `main(String[] args)`: Este es el método principal que se ejecuta al iniciar la aplicación. Primero, solicita al usuario que introduzca los puertos de los servidores a los que se conectará. Luego, pregunta al usuario si desea crear un archivo de cadenas aleatorias. Si el usuario responde afirmativamente, se llama al método `createFile()`. A continuación, se divide el archivo en partes con el método `divideFile()`. Luego, se crea un hilo para cada servidor y se envían las partes del archivo a los servidores para su ordenación. Finalmente, se combinan las cadenas ordenadas en un solo archivo y se guarda el archivo.
 
-- `createFile()`: Este método crea un archivo con cadenas aleatorias. Si el archivo ya existe, no se crea un nuevo archivo. Las cadenas se generan aleatoriamente utilizando los caracteres en el array `CHARACTERS`.
+- `createFile()`: Este método crea un archivo de cadenas aleatorias. Si el archivo ya existe, no se crea un nuevo archivo. Las cadenas aleatorias se generan a partir de un conjunto de caracteres predefinidos.
 
-- `fileSizeInMB(String fileName)`: Este método devuelve el tamaño del archivo en megabytes.
+- `fileSizeInMB(String fileName)`: Este método devuelve el tamaño del archivo especificado en megabytes.
 
-- `divideFile()`: Este método divide el archivo en partes más pequeñas. Cada parte contiene como máximo 70000 cadenas. Las partes se almacenan en una lista de arrays de cadenas.
+- `divideFile()`: Este método divide el archivo de cadenas en partes. Cada parte contiene un máximo de 70000 cadenas.
 
-- `sortFileList(List<String[]> strings)`: Este método combina todas las cadenas en una lista y las ordena utilizando el algoritmo de ordenación por mezcla.
+- `sortFileList(List<String[]> strings)`: Este método combina todas las cadenas en una sola lista y luego ordena las cadenas utilizando el algoritmo de ordenación por fusión.
 
-- `mergeSort(String[] arr)`: Este método implementa el algoritmo de ordenación por mezcla. Divide el array en dos mitades, las ordena de forma recursiva y luego las combina.
+- `mergeSort(String[] arr)`, `merge(String[] arr, String[] left, String[] right)`: Estos métodos implementan el algoritmo de ordenación por fusión.
 
-- `merge(String[] arr, String[] left, String[] right)`: Este método es parte del algoritmo de ordenación por mezcla. Combina dos arrays ordenados en un solo array ordenado.
+- `saveFile(String[] strings)`: Este método guarda las cadenas ordenadas en un archivo.
 
-- `saveFile(String[] strings)`: Este método guarda las cadenas ordenadas en un archivo. Cada cadena se separa por una coma.
-
-Además, la clase `Client` utiliza una cola de bloqueo (`BlockingQueue`) para almacenar las partes del archivo. Cada hilo toma una parte de la cola, la ordena y luego la agrega a la lista `dividedStrings`.
+La relación entre la clase `Client` y las clases `Settings`, `Server` y `SortFileI` podría ser que `Client` utiliza la configuración proporcionada por `Settings` para establecer la conexión con los servidores. `Client` envía las partes del archivo a `Server` para su ordenación. `Server` implementa la interfaz `SortFileI` para proporcionar el servicio de ordenación. Sin embargo, sin ver el código completo de `Settings`, `Server` y `SortFileI`, no puedo confirmar exactamente cómo interactúan con `Client`.
   
 ## **Server.java**:
   La clase `Server` en este código es un servidor que se ejecuta en un puerto específico y espera las solicitudes de los clientes para ordenar las cadenas de texto. Aquí está la explicación detallada:
