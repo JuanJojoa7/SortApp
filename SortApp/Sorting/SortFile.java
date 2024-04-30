@@ -17,15 +17,7 @@ package Sorting;
 
 public interface SortFile extends com.zeroc.Ice.Object
 {
-    boolean createFile(com.zeroc.Ice.Current current);
-
     String[] sortFileList(String[] strings, com.zeroc.Ice.Current current);
-
-    String[][] divideFile(int parts, com.zeroc.Ice.Current current);
-
-    String register(com.zeroc.Ice.Current current);
-
-    void waitForAllClients(com.zeroc.Ice.Current current);
 
     /** @hidden */
     static final String[] _iceIds =
@@ -58,24 +50,6 @@ public interface SortFile extends com.zeroc.Ice.Object
      * @param current -
      * @return -
     **/
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_createFile(SortFile obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
-    {
-        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
-        inS.readEmptyParams();
-        boolean ret = obj.createFile(current);
-        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
-        ostr.writeBool(ret);
-        inS.endWriteParams(ostr);
-        return inS.setResult(ostr);
-    }
-
-    /**
-     * @hidden
-     * @param obj -
-     * @param inS -
-     * @param current -
-     * @return -
-    **/
     static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_sortFileList(SortFile obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
     {
         com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
@@ -90,72 +64,14 @@ public interface SortFile extends com.zeroc.Ice.Object
         return inS.setResult(ostr);
     }
 
-    /**
-     * @hidden
-     * @param obj -
-     * @param inS -
-     * @param current -
-     * @return -
-    **/
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_divideFile(SortFile obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
-    {
-        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
-        com.zeroc.Ice.InputStream istr = inS.startReadParams();
-        int iceP_parts;
-        iceP_parts = istr.readInt();
-        inS.endReadParams();
-        String[][] ret = obj.divideFile(iceP_parts, current);
-        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
-        StringSeqSeqHelper.write(ostr, ret);
-        inS.endWriteParams(ostr);
-        return inS.setResult(ostr);
-    }
-
-    /**
-     * @hidden
-     * @param obj -
-     * @param inS -
-     * @param current -
-     * @return -
-    **/
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_register(SortFile obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
-    {
-        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
-        inS.readEmptyParams();
-        String ret = obj.register(current);
-        com.zeroc.Ice.OutputStream ostr = inS.startWriteParams();
-        ostr.writeString(ret);
-        inS.endWriteParams(ostr);
-        return inS.setResult(ostr);
-    }
-
-    /**
-     * @hidden
-     * @param obj -
-     * @param inS -
-     * @param current -
-     * @return -
-    **/
-    static java.util.concurrent.CompletionStage<com.zeroc.Ice.OutputStream> _iceD_waitForAllClients(SortFile obj, final com.zeroc.IceInternal.Incoming inS, com.zeroc.Ice.Current current)
-    {
-        com.zeroc.Ice.Object._iceCheckMode(null, current.mode);
-        inS.readEmptyParams();
-        obj.waitForAllClients(current);
-        return inS.setResult(inS.writeEmptyParams());
-    }
-
     /** @hidden */
     final static String[] _iceOps =
     {
-        "createFile",
-        "divideFile",
         "ice_id",
         "ice_ids",
         "ice_isA",
         "ice_ping",
-        "register",
-        "sortFileList",
-        "waitForAllClients"
+        "sortFileList"
     };
 
     /** @hidden */
@@ -173,39 +89,23 @@ public interface SortFile extends com.zeroc.Ice.Object
         {
             case 0:
             {
-                return _iceD_createFile(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
             }
             case 1:
             {
-                return _iceD_divideFile(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
             }
             case 2:
             {
-                return com.zeroc.Ice.Object._iceD_ice_id(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
             }
             case 3:
             {
-                return com.zeroc.Ice.Object._iceD_ice_ids(this, in, current);
+                return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
             }
             case 4:
             {
-                return com.zeroc.Ice.Object._iceD_ice_isA(this, in, current);
-            }
-            case 5:
-            {
-                return com.zeroc.Ice.Object._iceD_ice_ping(this, in, current);
-            }
-            case 6:
-            {
-                return _iceD_register(this, in, current);
-            }
-            case 7:
-            {
                 return _iceD_sortFileList(this, in, current);
-            }
-            case 8:
-            {
-                return _iceD_waitForAllClients(this, in, current);
             }
         }
 
