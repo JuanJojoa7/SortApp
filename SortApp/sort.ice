@@ -5,7 +5,6 @@ module Sorting {
     interface SortFile {
         bool createFile();
         StringSeq sortFileList(StringSeq strings);
-        StringSeqSeq divideFile(int parts);
         string register();
         void waitForAllClients();
     }

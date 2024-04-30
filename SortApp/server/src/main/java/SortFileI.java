@@ -77,6 +77,10 @@ public class SortFileI implements SortFile {
         return file.length() / MB;
     }
 
+    private int serverCount(){
+        return TOTAL_CLIENTS;
+    }
+
     @Override
     public String[] sortFileList(String[] strings, Current current) {
         // Sort file implementation
@@ -124,38 +128,6 @@ public class SortFileI implements SortFile {
         }
 
         return arr;
-    }
-
-
-    @Override
-    public String[][] divideFile(int parts, Current current) {
-        // Divide file implementation
-        List<String> stringList = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Split the line by the comma delimiter
-                String[] divs = line.split(",");
-                for (String div : divs) {
-                    stringList.add(div.trim()); // Trim any leading/trailing spaces
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String[][] Nlist = new String[parts][stringList.size()];
-        int divs = stringList.size()/parts;
-        for (int i = 0; i < parts; i++) {
-            for(int j = 0; j < divs; j++){
-                Nlist[i][j] = stringList.get(j+(divs*i)); 
-            }
-        }
-
-        return Nlist;
-        //throw new UnsupportedOperationException("Unimplemented method 'divideFile'");
-
     }
 
     private static int connectionCount = 0;
