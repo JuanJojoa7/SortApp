@@ -145,11 +145,11 @@ public class SortFileI implements SortFile {
             e.printStackTrace();
         }
 
-        String[][] Nlist = new String[stringList.size()][parts];
+        String[][] Nlist = new String[parts][stringList.size()];
         int divs = stringList.size()/parts;
         for (int i = 0; i < parts; i++) {
             for(int j = 0; j < divs; j++){
-                Nlist[j][i] = stringList.get(j+(divs*i)); 
+                Nlist[i][j] = stringList.get(j+(divs*i)); 
             }
         }
 
