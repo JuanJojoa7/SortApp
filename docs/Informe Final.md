@@ -6,7 +6,7 @@
 
 El código fuente está organizado de la siguiente manera:
 
-- **Client.java**:
+## **Client.java**:
   La clase `Client` en este código es una implementación de un cliente que se conecta a varios servidores para ordenar cadenas de texto. Aquí está lo que hace cada parte del código:
 
 1. **Variables y constantes**: Define varias constantes y variables, incluyendo un `Scanner` para la entrada del usuario, una longitud de cadena, un tamaño de archivo objetivo, un nombre de archivo, y un array de caracteres para generar cadenas aleatorias.
@@ -23,7 +23,7 @@ El código fuente está organizado de la siguiente manera:
 
 7. **Métodos mergeSort y merge**: Estos métodos implementan el algoritmo de ordenamiento por mezcla para ordenar las cadenas.
 
-- **Server.java**:
+## **Server.java**:
   La clase `Server` en este código es una implementación de un servidor que recibe cadenas de texto de un cliente para ordenarlas. Aquí está lo que hace cada parte del código:
 
 1. **Variables**: Define un `Scanner` para la entrada del usuario y una variable `port` para almacenar el número de puerto en el que se ejecutará el servidor.
