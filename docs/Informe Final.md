@@ -40,22 +40,26 @@ Por lo tanto, dado el contexto de este sistema, merge sort parece ser la elecci�
 El código fuente está organizado de la siguiente manera:
 
 ## **Client.java**:
-  La clase `Client` en este código es una implementación de un cliente que se conecta a varios servidores para ordenar cadenas de texto. Aquí está lo que hace cada parte del código:
+  La clase `Client` en este código es un cliente que se conecta a varios servidores para ordenar cadenas de texto. Aquí está la explicación detallada de cada método:
 
-1. **Variables y constantes**: Define varias constantes y variables, incluyendo un `Scanner` para la entrada del usuario, una longitud de cadena, un tamaño de archivo objetivo, un nombre de archivo, y un array de caracteres para generar cadenas aleatorias.
+- `main(String[] args)`: Este es el método principal que se ejecuta cuando se inicia el programa. Primero, solicita al usuario que agregue servidores proporcionando los números de puerto. Luego, pregunta al usuario si desea crear un archivo de números. Si la respuesta es sí, se llama al método `createFile()`. Después de eso, el archivo se divide en partes más pequeñas con el método `divideFile()`. Luego, se inician hilos para cada servidor y se les asigna una parte del archivo para ordenar. Una vez que todos los hilos han terminado, las cadenas ordenadas se combinan y se ordenan nuevamente. Finalmente, las cadenas ordenadas se guardan en un archivo.
 
-2. **Método main**: En el método `main`, se crea una lista de puertos a los que se conectará el cliente. Luego, se le pregunta al usuario si desea crear un archivo de números. Si el usuario responde afirmativamente, se llama al método `createFile` para crear un archivo con cadenas aleatorias. Luego, el archivo se divide en partes iguales al número de servidores y cada parte se envía a un servidor diferente para ser ordenada. Una vez que todas las partes han sido ordenadas por los servidores, se combinan y se ordenan en el cliente. Finalmente, se imprime el tiempo que tomó todo el proceso.
+- `createFile()`: Este método crea un archivo con cadenas aleatorias. Si el archivo ya existe, no se crea un nuevo archivo. Las cadenas se generan aleatoriamente utilizando los caracteres en el array `CHARACTERS`.
 
-3. **Método createFile**: Este método crea un archivo con cadenas aleatorias. Si el archivo ya existe, no se crea uno nuevo.
+- `fileSizeInMB(String fileName)`: Este método devuelve el tamaño del archivo en megabytes.
 
-4. **Método fileSizeInMB**: Este método devuelve el tamaño del archivo en megabytes.
+- `divideFile()`: Este método divide el archivo en partes más pequeñas. Cada parte contiene como máximo 70000 cadenas. Las partes se almacenan en una lista de arrays de cadenas.
 
-5. **Método divideFile**: Este método divide el archivo en partes iguales al número de servidores.
+- `sortFileList(List<String[]> strings)`: Este método combina todas las cadenas en una lista y las ordena utilizando el algoritmo de ordenación por mezcla.
 
-6. **Método sortFileList**: Este método combina todas las partes ordenadas por los servidores y las ordena.
+- `mergeSort(String[] arr)`: Este método implementa el algoritmo de ordenación por mezcla. Divide el array en dos mitades, las ordena de forma recursiva y luego las combina.
 
-7. **Métodos mergeSort y merge**: Estos métodos implementan el algoritmo de ordenamiento por mezcla para ordenar las cadenas.
+- `merge(String[] arr, String[] left, String[] right)`: Este método es parte del algoritmo de ordenación por mezcla. Combina dos arrays ordenados en un solo array ordenado.
 
+- `saveFile(String[] strings)`: Este método guarda las cadenas ordenadas en un archivo. Cada cadena se separa por una coma.
+
+Además, la clase `Client` utiliza una cola de bloqueo (`BlockingQueue`) para almacenar las partes del archivo. Cada hilo toma una parte de la cola, la ordena y luego la agrega a la lista `dividedStrings`.
+  
 ## **Server.java**:
   La clase `Server` en este código es una implementación de un servidor que recibe cadenas de texto de un cliente para ordenarlas. Aquí está lo que hace cada parte del código:
 
