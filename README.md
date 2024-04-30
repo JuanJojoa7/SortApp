@@ -10,6 +10,7 @@
 # Recursos del proyecto
 
 i.[Informe Final](https://github.com/JuanJojoa7/TalkingApp-V2/blob/main/docs/Informe%20Final.md)
+ii.[Informe Final](https://github.com/JuanJojoa7/TalkingApp-V2/blob/main/docs/Estructura%20del%20codigo%20fuente.md)
 
 # Implementación de Algoritmo de Ordenamiento Distribuido con Llamadas Asíncronas
 
