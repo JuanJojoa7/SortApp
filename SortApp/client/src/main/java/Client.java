@@ -1,3 +1,5 @@
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -14,7 +16,7 @@ public class Client {
     public static Scanner input = new Scanner(System.in);
     private static final int STRING_LENGTH = 10;
     private static final int MB = 1024 * 1024;
-    private static final int TARGET_SIZE_MB = 10;
+    private static final int TARGET_SIZE_MB = 100;
     private static final String FILE_NAME = "server/src/main/resources/randomStrings.txt";
     private static final char[] CHARACTERS = "abcdefghijklmnopqrstuvwxyz".toCharArray();
     // Time elapsed
@@ -24,17 +26,9 @@ public class Client {
         // Array of ports
         List<Integer> ports = new ArrayList<>();
 
-        ports.add(10000);
-        ports.add(10001);
-        ports.add(10002);
-        ports.add(10003);
-        ports.add(10004);
-        ports.add(10005);
-
         String answer;
 
         // Connection to the servers
-        /**
         do {
             System.out.print("¿Deseas agregar un servidor? (s/n): ");
             answer = input.nextLine();
@@ -44,7 +38,6 @@ public class Client {
                 input.nextLine();
             }
         } while (!answer.equalsIgnoreCase("n"));
-        */
 
         // Strings to sort
         System.out.println("¿Deseas crear el archivo de números? (s/n): ");
@@ -60,13 +53,15 @@ public class Client {
 
         // Charge parts
         System.out.println("Cargando archivo...");
-        List<String[]> lists = divideFile(ports.size());
+        List<String[]> lists = divideFile();
 
         List<String[]> dividedStrings = new ArrayList<>();
 
         List<Thread> threads = new ArrayList<>();
 
         startTime = System.currentTimeMillis();
+
+        BlockingQueue<String[]> queue = new LinkedBlockingQueue<>(lists);
 
         for (int port : ports) {
             Thread thread = new Thread(new Runnable() {
@@ -79,11 +74,18 @@ public class Client {
                             throw new Error("Invalid proxy");
                         }
 
-                        System.out.println("Sorting file using server on port " + port);
+                        while (true) {
+                            String[] stringsToSort = queue.poll();
+                            if (stringsToSort == null) {
+                                break;
+                            }
 
-                        String[] sortedStrings = sortProxy.sortFileList(lists.get(ports.indexOf(port)));
+                            System.out.println("Sorting file using server on port " + port);
+                            System.out.println("Length: " + stringsToSort.length);
+                            String[] sortedStrings = sortProxy.sortFileList(stringsToSort);
 
-                        dividedStrings.add(sortedStrings);
+                            dividedStrings.add(sortedStrings);
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -110,6 +112,11 @@ public class Client {
 
         // Print the time elapsed
         System.out.println("Tiempo utilizado: " + (System.currentTimeMillis() - startTime) + "ms");
+
+        // Save the sorted strings to a file
+        saveFile(sortedStrings);
+
+        System.out.println("Archivo guardado");
     }
 
     /**
@@ -165,7 +172,7 @@ public class Client {
         return file.length() / MB;
     }
 
-    private static List<String[]> divideFile(int parts) {
+    private static List<String[]> divideFile() {
         // Divide file implementation
         List<String> stringList = new ArrayList<>();
 
@@ -183,13 +190,16 @@ public class Client {
         }
 
         List<String[]> Nlist = new ArrayList<>();
-        int divs = stringList.size()/parts;
-        for (int i = 0; i < parts; i++) {
-            String[] part = new String[divs];
-            for(int j = 0; j < divs; j++){
-                part[j] = stringList.get(j+(divs*i)); 
+        int divs = (int) Math.ceil((double) stringList.size() / 70000);
+        for (int i = 0; i < divs; i++) {
+            int size = Math.min(70000, stringList.size() - i * 70000);
+            String[] array = new String[size];
+            Nlist.add(array);
+            for(int j = 0; j < size; j++){
+                if(!stringList.get(j + (i * 70000)).isEmpty()){
+                    Nlist.get(i)[j] = stringList.get(j + (i * 70000));
+                }
             }
-            Nlist.add(part);
         }
 
         return Nlist;
@@ -240,6 +250,16 @@ public class Client {
 
         while (rightIndex < right.length) {
             arr[arrIndex++] = right[rightIndex++];
+        }
+    }
+
+    private static void saveFile(String[] strings) {
+        try (FileWriter writer = new FileWriter("server/src/main/resources/sortedStrings.txt")) {
+            for (String string : strings) {
+                writer.write(string + ",");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
