@@ -68,37 +68,31 @@ Además, la clase `Client` utiliza una cola de bloqueo (`BlockingQueue`) para al
 La relación entre la clase `Server` y la clase `Client` es que el cliente se conecta a este servidor para ordenar las cadenas de texto. El cliente divide el archivo en partes más pequeñas y envía cada parte a un servidor diferente para que la ordene. Una vez que todas las partes están ordenadas, el cliente las combina y las ordena de nuevo. Por lo tanto, el servidor es responsable de ordenar una parte del archivo, mientras que el cliente es responsable de dividir el archivo, enviar las partes a los servidores, combinar las partes ordenadas y ordenarlas de nuevo.
 
 ## **SortFileI.java**:
-  La clase `SortFileI` implementa la interfaz `SortFile` y define cómo se deben ordenar las cadenas de texto que recibe del cliente. Aquí está lo que hace cada parte del código:
+  La clase `SortFileI` en este código implementa la interfaz `SortFile` y proporciona la funcionalidad para ordenar una lista de cadenas de texto. Aquí está la explicación detallada de cada método:
 
-1. **sortFileList**: Este método toma un array de cadenas de texto y las ordena utilizando el algoritmo de ordenamiento por mezcla (merge sort). Luego, devuelve el array ordenado.
+- `sortFileList(String[] strings, Current current)`: Este método es la implementación de la interfaz `SortFile`. Toma una lista de cadenas y la ordena utilizando el algoritmo de ordenación por mezcla. El objeto `Current` proporciona información sobre la solicitud actual, como el adaptador de objeto y la identidad del objeto, pero no se utiliza en este método.
 
-2. **mergeSort**: Este es un método recursivo que implementa el algoritmo de ordenamiento por mezcla. Divide el array en dos mitades, las ordena por separado y luego las combina.
+- `mergeSort(String[] arr)`: Este método implementa el algoritmo de ordenación por mezcla. Divide el array en dos mitades, las ordena de forma recursiva y luego las combina. Si el array tiene un solo elemento o está vacío, se devuelve tal cual, ya que un array con un solo elemento ya está ordenado.
 
-3. **merge**: Este método toma dos arrays ordenados y los combina en un solo array ordenado.
+- `merge(String[] arr, String[] left, String[] right)`: Este método es parte del algoritmo de ordenación por mezcla. Combina dos arrays ordenados en un solo array ordenado. Primero, compara los elementos de los arrays `left` y `right` y agrega el menor al array `arr`. Luego, agrega los elementos restantes del array `left` o `right` al array `arr`.
 
-Cómo se relaciona con las clases `Client.java` y `Server.java`:
-
-- `Client.java`: El cliente envía un array de cadenas de texto al servidor para que lo ordene. El servidor utiliza la implementación de `SortFileI` para ordenar las cadenas.
-
-- `Server.java`: El servidor recibe el array de cadenas de texto del cliente y utiliza la implementación de `SortFileI` para ordenar las cadenas. Luego, devuelve el array ordenado al cliente.
+La relación entre la clase `SortFileI` y las clases `Client` y `Server` es que `SortFileI` proporciona la funcionalidad que el servidor `Server` ofrece a los clientes `Client`. El cliente se conecta al servidor y le pide que ordene una lista de cadenas utilizando el método `sortFileList()`. El servidor utiliza la implementación de `SortFileI` para ordenar las cadenas. Por lo tanto, `SortFileI` es esencialmente la parte del servidor que realiza el trabajo de ordenación.
   
 ## **Settings.java**:
-  La clase `Settings` en este código es una clase de configuración que almacena la configuración del sistema, específicamente el número de nodos (`numNodes`) y el puerto (`port`). Aquí está lo que hace cada parte del código:
+  La clase `Settings` en este código es una clase de configuración que almacena el número de nodos y el puerto que se utilizarán en la aplicación. Aquí está la explicación detallada de cada método:
 
-1. **Variables**: Define dos variables privadas, `numNodes` y `port`.
+- `Settings(int numNodes, int port)`: Este es el constructor de la clase `Settings`. Toma dos parámetros: el número de nodos y el puerto. Estos valores se asignan a las variables de instancia `numNodes` y `port`.
 
-2. **Constructor**: El constructor `SystemConfig` toma dos argumentos, `numNodes` y `port`, y los asigna a las variables de la clase.
+- `getNumNodes()`: Este método es un getter para la variable de instancia `numNodes`. Devuelve el número de nodos.
 
-3. **Getters y Setters**: Los métodos `getNumNodes`, `setNumNodes`, `getPort`, y `setPort` son getters y setters para las variables `numNodes` y `port`, respectivamente. Permiten obtener y establecer los valores de estas variables.
+- `setNumNodes(int numNodes)`: Este método es un setter para la variable de instancia `numNodes`. Establece el número de nodos.
 
-Cómo se relaciona con las clases `Client.java`, `Server.java` y `SortFileI.java`:
+- `getPort()`: Este método es un getter para la variable de instancia `port`. Devuelve el puerto.
 
-- `Client.java`: El cliente puede utilizar la clase `Settings` para obtener la configuración del sistema, como el número de nodos y el puerto al que se debe conectar.
+- `setPort(int port)`: Este método es un setter para la variable de instancia `port`. Establece el puerto.
 
-- `Server.java`: El servidor puede utilizar la clase `Settings` para obtener la configuración del sistema, como el número de nodos y el puerto en el que debe escuchar las conexiones.
-
-- `SortFileI.java`: Aunque no hay una relación directa entre `SortFileI` y `Settings` en el código proporcionado, es posible que `SortFileI` pueda utilizar la configuración del sistema para determinar cómo manejar la ordenación de las cadenas de texto.
-
+La relación entre la clase `Settings` y las clases `Client`, `Server` y `SortFileI` podría ser que `Settings` proporciona la configuración que `Client` y `Server` utilizan para establecer la conexión. Por ejemplo, `Client` podría utilizar el número de nodos para determinar cuántos servidores se deben conectar y el puerto para establecer la conexión. `Server` podría utilizar el puerto para escuchar las solicitudes entrantes. Sin embargo, sin ver el código completo de `Client` y `Server`, no puedo confirmar exactamente cómo utilizan la clase `Settings`. La clase `SortFileI` probablemente no interactúa directamente con `Settings`, ya que su responsabilidad es ordenar las cadenas de texto.
+  
 ## Instrucciones de Uso
 
 1. Clona este repositorio en tu máquina local.
