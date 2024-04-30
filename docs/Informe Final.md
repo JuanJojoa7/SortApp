@@ -47,7 +47,22 @@ Cómo se relaciona con las clases `Client.java` y `Server.java`:
 
 - `Server.java`: El servidor recibe el array de cadenas de texto del cliente y utiliza la implementación de `SortFileI` para ordenar las cadenas. Luego, devuelve el array ordenado al cliente.
   
-- **ICECommunicator.java**: Maneja la comunicación entre los nodos utilizando ICE.
+## **Settings.java**:
+  La clase `Settings` en este código es una clase de configuración que almacena la configuración del sistema, específicamente el número de nodos (`numNodes`) y el puerto (`port`). Aquí está lo que hace cada parte del código:
+
+1. **Variables**: Define dos variables privadas, `numNodes` y `port`.
+
+2. **Constructor**: El constructor `SystemConfig` toma dos argumentos, `numNodes` y `port`, y los asigna a las variables de la clase.
+
+3. **Getters y Setters**: Los métodos `getNumNodes`, `setNumNodes`, `getPort`, y `setPort` son getters y setters para las variables `numNodes` y `port`, respectivamente. Permiten obtener y establecer los valores de estas variables.
+
+En cuanto a cómo se relaciona con las clases `Client.java`, `Server.java` y `SortFileI.java`:
+
+- `Client.java`: El cliente puede utilizar la clase `Settings` para obtener la configuración del sistema, como el número de nodos y el puerto al que se debe conectar.
+
+- `Server.java`: El servidor puede utilizar la clase `Settings` para obtener la configuración del sistema, como el número de nodos y el puerto en el que debe escuchar las conexiones.
+
+- `SortFileI.java`: Aunque no hay una relación directa entre `SortFileI` y `Settings` en el código proporcionado, es posible que `SortFileI` pueda utilizar la configuración del sistema para determinar cómo manejar la ordenación de las cadenas de texto.
 
 ## Instrucciones de Uso
 
