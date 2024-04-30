@@ -56,7 +56,7 @@ Cómo se relaciona con las clases `Client.java` y `Server.java`:
 
 3. **Getters y Setters**: Los métodos `getNumNodes`, `setNumNodes`, `getPort`, y `setPort` son getters y setters para las variables `numNodes` y `port`, respectivamente. Permiten obtener y establecer los valores de estas variables.
 
-En cuanto a cómo se relaciona con las clases `Client.java`, `Server.java` y `SortFileI.java`:
+Cómo se relaciona con las clases `Client.java`, `Server.java` y `SortFileI.java`:
 
 - `Client.java`: El cliente puede utilizar la clase `Settings` para obtener la configuración del sistema, como el número de nodos y el puerto al que se debe conectar.
 
