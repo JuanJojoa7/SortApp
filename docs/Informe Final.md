@@ -1,5 +1,10 @@
 # Informe Final
 
+## Importancia del ICE y Gradle en el desarrollo del proyecto: Sort.ice: 
+  Definimos una interfaz `SortFile` en el módulo `Sorting` usando el lenguaje de definición de interfaz (IDL) de Ice. Esta interfaz define un método `sortFileList` que toma una secuencia de cadenas (`StringSeq`) y devuelve una secuencia de cadenas.
+
+El papel de este código en la implementación es definir la interfaz de comunicación entre el cliente y el servidor. El cliente y el servidor utilizan esta interfaz para comunicarse entre sí. El cliente envía una secuencia de cadenas al servidor para que las ordene, y el servidor devuelve la secuencia ordenada.
+
 ## Metodo de ordenamiento
   El algoritmo de ordenamiento por mezcla (merge sort) es una elección eficiente para este sistema debido a sus características particulares:
 
