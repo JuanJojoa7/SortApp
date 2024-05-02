@@ -89,13 +89,15 @@ La relación entre la clase `SortFileI` y las clases `Client` y `Server` es que 
 
 La relación entre la clase `Settings` y las clases `Client`, `Server` y `SortFileI` podría ser que `Settings` proporciona la configuración que `Client` y `Server` utilizan para establecer la conexión. Por ejemplo, `Client` podría utilizar el número de nodos para determinar cuántos servidores se deben conectar y el puerto para establecer la conexión. `Server` podría utilizar el puerto para escuchar las solicitudes entrantes. 
   
-## Instrucciones de Uso
+## Instrucciones de Uso Ejecucion Local
+
+![image](https://github.com/JuanJojoa7/SortApp/assets/110687384/81938b6a-52eb-4257-9aa3-4ef81efaed7d)
 
 1. Clona este repositorio en tu máquina local.
 2. Importa el proyecto en tu entorno de desarrollo Java preferido.
 Aquí están los pasos pulidos para ejecutar el programa:
 
-3. **Inicializar los servidores**: Inicie cada servidor que actuará como un trabajador en el programa de ordenamiento. Asegúrese de asignar a cada servidor un puerto único que no esté en uso, en el rango de 10000 en adelante.
+3. **Inicializar la clase Cliente**: Inicie cada servidor que actuará como un trabajador en el programa de ordenamiento. Asegúrese de asignar a cada servidor un puerto único que no esté en uso, en el rango de 10000 en adelante.
 
 4. **Ejecutar el cliente**: Una vez que todos los servidores estén en funcionamiento, inicie el cliente. Durante la inicialización, el cliente le pedirá que introduzca los puertos que los servidores están utilizando.
 
