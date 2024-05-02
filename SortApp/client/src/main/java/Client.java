@@ -19,27 +19,64 @@ public class Client {
     private static final int TARGET_SIZE_MB = 100;
     private static final String FILE_NAME = "server/src/main/resources/randomStrings.txt";
     private static final char[] CHARACTERS = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+    private static final int LIMIT = 85000;
+    private static boolean localServers = false;
     private static long startTime;
 
     public static void main(String[] args) {
         // Array of ports
         List<Integer> ports = new ArrayList<>();
+        List<String> ips = new ArrayList<>();
 
         String answer;
 
         // Connection to the servers
-        do {
-            System.out.print("¿Deseas agregar un servidor? (s/n): ");
-            answer = input.nextLine();
-            if (answer.equalsIgnoreCase("s")) {
-                System.out.print("Ingresa el puerto del servidor: ");
-                ports.add(input.nextInt());
-                input.nextLine();
+        System.out.print("¿Deseas crear servidores locales? (s/n): ");
+        answer = input.nextLine();
+
+        // Create threads
+        List<Thread> serverThreads = new ArrayList<>();
+
+        if (answer.equalsIgnoreCase("s")) {
+            localServers = true;
+            System.out.print("¿Cuántos servidores deseas crear?: ");
+            int n = input.nextInt();
+            input.nextLine();
+            System.out.println("Creando " + n + " servidores...");
+            for (int i = 0; i < n; i++) {
+                int port = 10000 + i;
+                ports.add(port);
+                Thread thread = new Thread(() -> {
+                    try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args)) {
+                        com.zeroc.Ice.ObjectAdapter adapter =
+                        communicator.createObjectAdapterWithEndpoints("SortingFileAdapter", "tcp -h localhost -p " + port);
+                        com.zeroc.Ice.Object object = new SortFileI();
+                        adapter.add(object, com.zeroc.Ice.Util.stringToIdentity("SortingFile"));
+                        adapter.activate();
+                        communicator.waitForShutdown();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                thread.start();
+                serverThreads.add(thread);
             }
-        } while (!answer.equalsIgnoreCase("n"));
+        } else {
+            do {
+                System.out.print("¿Deseas agregar un servidor? (s/n): ");
+                answer = input.nextLine();
+                if (answer.equalsIgnoreCase("s")) {
+                    System.out.println("Ingresa la dirección IP del servidor: ");
+                    ips.add(input.nextLine());
+                    System.out.print("Ingresa el puerto del servidor: ");
+                    ports.add(input.nextInt());
+                    input.nextLine();
+                }
+            } while (!answer.equalsIgnoreCase("n"));
+        }
 
         // Strings to sort
-        System.out.println("¿Deseas crear el archivo de números? (s/n): ");
+        System.out.print("¿Deseas crear el archivo de números? (s/n): ");
         answer = input.nextLine();
         if (answer.equalsIgnoreCase("s")) {
             boolean response = createFile();
@@ -50,7 +87,21 @@ public class Client {
             }
         }
 
-        System.out.println("Ordenando sin hilos...");
+        // Delete files
+        File file1 = new File("server/src/main/resources/sortedStrings1.txt");
+        File file2 = new File("server/src/main/resources/sortedStrings2.txt");
+
+        System.out.println("Borrando archivos anteriores...");
+
+        if (file1.exists()) {
+            file1.delete();
+        }
+
+        if (file2.exists()) {
+            file2.delete();
+        }
+
+        System.out.println("Ordenando archivo sin hilos...");
 
         // Load the file
         List<String> stringList = new ArrayList<>();
@@ -97,7 +148,12 @@ public class Client {
                 @Override
                 public void run() {
                     try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args)) {
-                        com.zeroc.Ice.ObjectPrx base = communicator.stringToProxy("SortingFile:tcp -h localhost -p " + port);
+                        com.zeroc.Ice.ObjectPrx base;
+                        if (localServers) {
+                            base = communicator.stringToProxy("SortingFile:tcp -h localhost -p " + port);
+                        } else {
+                            base = communicator.stringToProxy("SortingFile:tcp -h " + ips.get(ports.indexOf(port)) + " -p " + port);
+                        }
                         Sorting.SortFilePrx sortProxy = Sorting.SortFilePrx.checkedCast(base);
                         if(sortProxy == null) {
                             throw new Error("Invalid proxy");
@@ -108,9 +164,6 @@ public class Client {
                             if (stringsToSort == null) {
                                 break;
                             }
-
-                            // System.out.println("Sorting file using server on port " + port);
-                            // System.out.println("Length: " + stringsToSort.length);
 
                             String[] sortedStrings = sortProxy.sortFileList(stringsToSort);
 
@@ -145,6 +198,8 @@ public class Client {
         saveFile(sortedStrings, 2);
 
         System.out.println("Archivo guardado.");
+
+        System.exit(0);
     }
 
     /**
@@ -218,14 +273,14 @@ public class Client {
         }
 
         List<String[]> Nlist = new ArrayList<>();
-        int divs = (int) Math.ceil((double) stringList.size() / 70000);
+        int divs = (int) Math.ceil((double) stringList.size() / LIMIT);
         for (int i = 0; i < divs; i++) {
-            int size = Math.min(70000, stringList.size() - i * 70000);
+            int size = Math.min(LIMIT, stringList.size() - i * LIMIT);
             String[] array = new String[size];
             Nlist.add(array);
             for(int j = 0; j < size; j++){
-                if(!stringList.get(j + (i * 70000)).isEmpty()){
-                    Nlist.get(i)[j] = stringList.get(j + (i * 70000));
+                if(!stringList.get(j + (i * LIMIT)).isEmpty()){
+                    Nlist.get(i)[j] = stringList.get(j + (i * LIMIT));
                 }
             }
         }
