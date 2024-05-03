@@ -119,3 +119,36 @@ Aquí están los pasos pulidos para ejecutar el programa:
 **Aprovechamiento de Múltiples Núcleos de Procesamiento:** Cuando se utilizan hilos, el sistema puede distribuir las tareas de procesamiento entre múltiples núcleos de la CPU (si están disponibles). Esto puede resultar en un rendimiento más eficiente y en tiempos de procesamiento más rápidos, especialmente para operaciones intensivas en términos de CPU como el ordenamiento.
 
 7. **Finalizacion de la ejecucion y salidas**: Una vez que el archivo ha sido ordenado, el sistema le informará que la ordenación se ha completado con éxito. También le proporcionará la ubicación del archivo ordenado en el directorio y el tiempo que tardó en ordenarlo tanto usando hilos como sin usar hilos, comprobando asi la hipotesis de que si usamos hilos el ordenamiento se hace de manera mas rapida.
+
+## Instrucciones de Uso y explicacion de las salidas: Ejecucion con Ordenadores en Hotspot
+
+![image](https://github.com/JuanJojoa7/SortApp/assets/110687384/e39edeb2-d05b-4dd1-89e4-4d3aa563401c)
+
+![image](https://github.com/JuanJojoa7/SortApp/assets/110687384/49f9ff16-f210-4615-aef4-8b531c1fa0a5)
+
+1. Clona este repositorio en tu máquina local.
+2. Importa el proyecto en tu entorno de desarrollo Java preferido.
+   
+Aquí están los pasos pulidos para ejecutar el programa:
+
+3. **Inicializar la clase Server**: Al inicializar la clase cliente pedira al usuario crear servidores locales y se podra elegir cuantos servidores desea crear. Es importante destacar que cuanto más servidores locales se creen, menor será el tiempo que le tomará al programa organizar el archivo de datos. Esto se debe a que cada servidor puede procesar una parte del trabajo de manera independiente y simultánea, lo que aprovecha el paralelismo y acelera el proceso de organización del archivo.
+
+4. **Creacion del archivo de datos**: Acto seguido se le pregunta al usuario si desea crear el archivo de numeros para posteriormente organizarlo, en caso de no querer crear uno nuevo usara el que este en el directorio.
+
+5. **Ordenamiento Sin Hilos**: Despues de ingresar las entradas descritas anteriormente, el programa empezara a ordenar el archivo creado sin hilos, y dejando el tiempo de ejecucion que demora en consola para despues hacer la comparacion de tiempos usando hilos.
+
+**Ordenamiento sin Hilos (Secuencial)**
+
+**Procesamiento Secuencial:** Cuando el archivo se organiza sin utilizar hilos, el proceso es secuencial. Esto significa que cada paso del ordenamiento se realiza uno después del otro en una sola secuencia de ejecución. Si el archivo es grande o la tarea es intensiva en términos de procesamiento, este enfoque puede llevar más tiempo porque cada operación debe completarse antes de pasar a la siguiente.
+
+**Utilización de un Solo Núcleo de Procesamiento:** En un entorno de ejecución secuencial, la tarea se ejecuta en un solo hilo de ejecución (generalmente en un solo núcleo de procesador). Esto puede limitar la cantidad de trabajo que se puede realizar simultáneamente, especialmente si el ordenamiento implica operaciones intensivas en términos de CPU.
+
+6. **Ordenamiento con hilos**: Despues de hacer el ordenamiento sin hilos, el programa empezara a ordenar el archivo creado con hilos, y dejando el tiempo de ejecucion que demora en consola para despues hacer la comparacion de tiempos sin usar hilos.
+
+**Ordenamiento con Hilos (Paralelo)**
+
+**Procesamiento Paralelo:** Al utilizar hilos para organizar el archivo, se pueden realizar múltiples partes del ordenamiento de forma simultánea en diferentes hilos de ejecución. Esto permite aprovechar mejor los recursos de procesamiento disponibles, distribuyendo la carga de trabajo entre varios núcleos de procesador si están disponibles.
+
+**Aprovechamiento de Múltiples Núcleos de Procesamiento:** Cuando se utilizan hilos, el sistema puede distribuir las tareas de procesamiento entre múltiples núcleos de la CPU (si están disponibles). Esto puede resultar en un rendimiento más eficiente y en tiempos de procesamiento más rápidos, especialmente para operaciones intensivas en términos de CPU como el ordenamiento.
+
+7. **Finalizacion de la ejecucion y salidas**: Una vez que el archivo ha sido ordenado, el sistema le informará que la ordenación se ha completado con éxito. También le proporcionará la ubicación del archivo ordenado en el directorio y el tiempo que tardó en ordenarlo tanto usando hilos como sin usar hilos, comprobando asi la hipotesis de que si usamos hilos el ordenamiento se hace de manera mas rapida.
