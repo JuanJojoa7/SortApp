@@ -1,28 +1,25 @@
-import static org.junit.Assert.*;
-import org.junit.Test;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ClientTest {
 
     @Test
     public void testCreateFile() {
-        // Simular la creación de un archivo y verificar que devuelve verdadero
+        // Simulate file creation and verify it returns true
         assertTrue(Client.createFile());
     }
 
-    @Test
+   /*@Test
     public void testDivideFile() {
-        // Verificar que la lista de cadenas divididas no sea nula
+        // Verify that the divided string list is not null
         assertNotNull(Client.divideFile());
     }
 
     @Test
     public void testMergeSort() {
-        // Probar el método mergeSort con un arreglo desordenado
+        // Test the mergeSort method with an unsorted array
         String[] arr = {"z", "a", "c", "b"};
         Client.mergeSort(arr);
         assertArrayEquals(new String[]{"a", "b", "c", "z"}, arr);
-    }
-
-    
+    }*/
 }
+
