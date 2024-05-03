@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.Arrays;
@@ -14,14 +13,12 @@ import java.util.Arrays;
 public class Client {
     // Constants
     public static Scanner input = new Scanner(System.in);
-    private static final int STRING_LENGTH = 10;
-    private static final int MB = 1024 * 1024;
-    private static final int TARGET_SIZE_MB = 100;
     private static final String FILE_NAME = "server/src/main/resources/randomStrings.txt";
-    private static final char[] CHARACTERS = "abcdefghijklmnopqrstuvwxyz".toCharArray();
     private static final int LIMIT = 85000;
     private static boolean localServers = false;
     private static long startTime;
+    private static FileGenerator fileGenerator = new FileGenerator(FILE_NAME);
+    private static LocalMergeSort localMergeSort = new LocalMergeSort();
 
     public static void main(String[] args) {
         // Array of ports
@@ -75,53 +72,14 @@ public class Client {
             } while (!answer.equalsIgnoreCase("n"));
         }
 
-        // Strings to sort
-        System.out.print("¿Deseas crear el archivo de números? (s/n): ");
-        answer = input.nextLine();
-        if (answer.equalsIgnoreCase("s")) {
-            boolean response = createFile();
-            if (response) {
-                System.out.println("Archivo creado exitosamente");
-            } else {
-                System.out.println("El archivo ya existe");
-            }
-        }
+        setFileGenerator(fileGenerator);
 
-        // Delete files
-        File file1 = new File("server/src/main/resources/sortedStrings1.txt");
-        File file2 = new File("server/src/main/resources/sortedStrings2.txt");
+        // Sort list of strings with no threads
+        System.out.println("Ordenando archivo sin hilos");   
 
-        System.out.println("Borrando archivos anteriores...");
-
-        if (file1.exists()) {
-            file1.delete();
-        }
-
-        if (file2.exists()) {
-            file2.delete();
-        }
-
-        System.out.println("Ordenando archivo sin hilos...");
-
-        // Load the file
-        List<String> stringList = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Split the line by the comma delimiter
-                String[] divs = line.split(",");
-                for (String div : divs) {
-                    stringList.add(div.trim());
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Sort list of strings
-        String[] strings = stringList.toArray(new String[0]);
+        String[] strings = serializeFile(FILE_NAME).toArray(new String[0]);
         startTime = System.currentTimeMillis();
-        mergeSort(strings);
+        localMergeSort.mergeSort(strings);
         System.out.println("Archivo ordenado. Tiempo utilizado: " + (System.currentTimeMillis() - startTime) + "ms");
 
         // Save the sorted strings to a file
@@ -129,10 +87,11 @@ public class Client {
 
         System.out.println("Archivo guardado.");
 
+        // Sort list of strings with threads
         System.out.println("Ordenando archivo con hilos...");
 
-        // Charge parts
         System.out.println("Dividiendo partes...");
+
         List<String[]> lists = divideFile();
 
         List<String[]> dividedStrings = new ArrayList<>();
@@ -154,7 +113,9 @@ public class Client {
                         } else {
                             base = communicator.stringToProxy("SortingFile:tcp -h " + ips.get(ports.indexOf(port)) + " -p " + port);
                         }
+
                         Sorting.SortFilePrx sortProxy = Sorting.SortFilePrx.checkedCast(base);
+
                         if(sortProxy == null) {
                             throw new Error("Invalid proxy");
                         }
@@ -174,8 +135,8 @@ public class Client {
                         e.printStackTrace();
                     }
                 }
-
             });
+            
             thread.start();
             threads.add(thread);
         }
@@ -202,75 +163,54 @@ public class Client {
         System.exit(0);
     }
 
-    /**
-     * Create a file with random strings
-     */
-    public static boolean createFile() {
-        System.out.println("Creando archivo...");
-
-        File file = new File(FILE_NAME);
-        boolean fileCreated = false;
-        if (!file.exists()) {
-            try {
-                if (file.getParentFile().mkdirs()) {
-                    System.out.println("Directorio creado");
-                }
-                if (file.createNewFile()) {
-                    System.out.println("Archivo creado exitosamente");
-                    fileCreated = true;
-                } else {
-                    System.out.println("El archivo ya existe");
-                }
-            } catch (IOException e) {
-                System.out.println("Error al crear el archivo");
-                e.printStackTrace();
+    public static void setFileGenerator(FileGenerator fileGenerator) {
+        System.out.print("¿Deseas crear el archivo de números? (s/n): ");
+        String answer = input.nextLine();
+        if (answer.equalsIgnoreCase("s")) {
+            boolean response = fileGenerator.createFile();
+            if (response) {
+                System.out.println("Archivo creado exitosamente");
+            } else {
+                System.out.println("El archivo ya existe");
             }
         }
 
-        if (fileCreated) {
-            System.out.println("Escribiendo en el archivo...");
-            Random random = new Random();
-            try (FileWriter writer = new FileWriter(file)) {
-                while (fileSizeInMB(FILE_NAME) < TARGET_SIZE_MB) {
-                    for (int i = 0; i < STRING_LENGTH; i++) {
-                        writer.write(CHARACTERS[random.nextInt(CHARACTERS.length)]);
-                    }
-                    writer.write(",");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        // Delete files
+        File file1 = new File("server/src/main/resources/sortedStrings1.txt");
+        File file2 = new File("server/src/main/resources/sortedStrings2.txt");
+
+        System.out.println("Borrando archivos anteriores...");
+
+        if (file1.exists()) {
+            file1.delete();
         }
 
-        return fileCreated;
+        if (file2.exists()) {
+            file2.delete();
+        }
     }
 
-    /**
-     * Get the file size in MB
-     * @param fileName
-     * @return
-     */
-    private static long fileSizeInMB(String fileName) {
-        File file = new File(fileName);
-        return file.length() / MB;
-    }
-
-    private static List<String[]> divideFile() {
-        // Divide file implementation
+    private static List<String> serializeFile(String fileName) {
         List<String> stringList = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 // Split the line by the comma delimiter
                 String[] divs = line.split(",");
                 for (String div : divs) {
-                    stringList.add(div.trim()); // Trim any leading/trailing spaces
+                    stringList.add(div.trim());
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return stringList;
+    }
+
+    private static List<String[]> divideFile() {
+        // Divide file implementation
+        List<String> stringList = serializeFile(FILE_NAME);
 
         List<String[]> Nlist = new ArrayList<>();
         int divs = (int) Math.ceil((double) stringList.size() / LIMIT);
@@ -295,45 +235,8 @@ public class Client {
         }
 
         String[] allStringsArray = allStrings.toArray(new String[0]);
-        mergeSort(allStringsArray);
+        localMergeSort.mergeSort(allStringsArray);
         return allStringsArray;
-    }
-
-    private static void mergeSort(String[] arr) {
-        if (arr.length <= 1) {
-            return;
-        }
-
-        int mid = arr.length / 2;
-        String[] leftHalf = new String[mid];
-        String[] rightHalf = new String[arr.length - mid];
-        System.arraycopy(arr, 0, leftHalf, 0, mid);
-        System.arraycopy(arr, mid, rightHalf, 0, arr.length - mid);
-
-        mergeSort(leftHalf);
-        mergeSort(rightHalf);
-
-        merge(arr, leftHalf, rightHalf);
-    }
-
-    private static void merge(String[] arr, String[] left, String[] right) {
-        int leftIndex = 0, rightIndex = 0, arrIndex = 0;
-
-        while (leftIndex < left.length && rightIndex < right.length) {
-            if (left[leftIndex].compareTo(right[rightIndex]) < 0) {
-                arr[arrIndex++] = left[leftIndex++];
-            } else {
-                arr[arrIndex++] = right[rightIndex++];
-            }
-        }
-
-        while (leftIndex < left.length) {
-            arr[arrIndex++] = left[leftIndex++];
-        }
-
-        while (rightIndex < right.length) {
-            arr[arrIndex++] = right[rightIndex++];
-        }
     }
 
     private static void saveFile(String[] strings, int number) {
