@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 public class ClientTest {
 
@@ -8,7 +9,7 @@ public class ClientTest {
         assertTrue(Client.createFile());
     }
 
-   /*@Test
+   @Test
     public void testDivideFile() {
         // Verify that the divided string list is not null
         assertNotNull(Client.divideFile());
@@ -20,6 +21,6 @@ public class ClientTest {
         String[] arr = {"z", "a", "c", "b"};
         Client.mergeSort(arr);
         assertArrayEquals(new String[]{"a", "b", "c", "z"}, arr);
-    }*/
+    }
 }
 

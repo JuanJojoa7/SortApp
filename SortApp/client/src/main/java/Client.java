@@ -167,12 +167,12 @@ public class Client {
      * @param fileName
      * @return
      */
-    private static long fileSizeInMB(String fileName) {
+    public static long fileSizeInMB(String fileName) {
         File file = new File(fileName);
         return file.length() / MB;
     }
 
-    private static List<String[]> divideFile() {
+    static List<String[]> divideFile() {
         // Divide file implementation
         List<String> stringList = new ArrayList<>();
 
@@ -205,7 +205,7 @@ public class Client {
         return Nlist;
     }
 
-    private static String[] sortFileList(List<String[]> strings) {
+    public static String[] sortFileList(List<String[]> strings) {
         List<String> allStrings = new ArrayList<>();
         for (String[] array : strings) {
             allStrings.addAll(Arrays.asList(array));
@@ -216,7 +216,7 @@ public class Client {
         return allStringsArray;
     }
 
-    private static void mergeSort(String[] arr) {
+    public static void mergeSort(String[] arr) {
         if (arr.length <= 1) {
             return;
         }
@@ -233,7 +233,7 @@ public class Client {
         merge(arr, leftHalf, rightHalf);
     }
 
-    private static void merge(String[] arr, String[] left, String[] right) {
+    public static void merge(String[] arr, String[] left, String[] right) {
         int leftIndex = 0, rightIndex = 0, arrIndex = 0;
 
         while (leftIndex < left.length && rightIndex < right.length) {
@@ -253,7 +253,7 @@ public class Client {
         }
     }
 
-    private static void saveFile(String[] strings) {
+    public static void saveFile(String[] strings) {
         try (FileWriter writer = new FileWriter("server/src/main/resources/sortedStrings.txt")) {
             for (String string : strings) {
                 writer.write(string + ",");

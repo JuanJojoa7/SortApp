@@ -34,8 +34,11 @@ subprojects {
         implementation 'com.zeroc:ice:3.7.6' // Dependencia de Zero Ice
         // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
         testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.0-M1'
+        // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params
+        testImplementation 'org.junit.jupiter:junit-jupiter-params:5.11.0-M1'
+        // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
+        testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.11.0-M1'
 
-        testRuntimeOnly 'com.zeroc:ice:3.7.6'
     }
     
     // Create a JAR file with the appropriate Main-Class and Class-Path attributes
@@ -54,5 +57,9 @@ subprojects {
 test{
         useJUnitPlatform()
         testLogging.showStandardStreams=true
+
+        testLogging{
+            events "passed", "skipped", "failed"
+        }
     }
 
