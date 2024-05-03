@@ -105,9 +105,17 @@ Aquí están los pasos pulidos para ejecutar el programa:
 7. **Ordenamiento Sin Hilos**: Despues de ingresar las entradas descritas anteriormente, el programa empezara a ordenar el archivo creado sin hilos, y dejando el tiempo de ejecucion que demora en consola para despues hacer la comparacion de tiempos usando hilos.
 
 **Ordenamiento sin Hilos (Secuencial)**
+
 **Procesamiento Secuencial:** Cuando el archivo se organiza sin utilizar hilos, el proceso es secuencial. Esto significa que cada paso del ordenamiento se realiza uno después del otro en una sola secuencia de ejecución. Si el archivo es grande o la tarea es intensiva en términos de procesamiento, este enfoque puede llevar más tiempo porque cada operación debe completarse antes de pasar a la siguiente.
+
 **Utilización de un Solo Núcleo de Procesamiento:** En un entorno de ejecución secuencial, la tarea se ejecuta en un solo hilo de ejecución (generalmente en un solo núcleo de procesador). Esto puede limitar la cantidad de trabajo que se puede realizar simultáneamente, especialmente si el ordenamiento implica operaciones intensivas en términos de CPU.
 
-9. **Ordenamiento con hilos**: El sistema creará el archivo (si eligió hacerlo) y luego procederá a ordenarlo utilizando los servidores que ha inicializado.
+9. **Ordenamiento con hilos**: Despues de hacer el ordenamiento sin hilos, el programa empezara a ordenar el archivo creado con hilos, y dejando el tiempo de ejecucion que demora en consola para despues hacer la comparacion de tiempos sin usar hilos.
 
-10. **Confirmación de la ordenación**: Una vez que el archivo ha sido ordenado, el sistema le informará que la ordenación se ha completado con éxito. También le proporcionará la ubicación del archivo ordenado en el directorio y el tiempo que tardó en ordenarlo.
+**Ordenamiento con Hilos (Paralelo)**
+
+**Procesamiento Paralelo:** Al utilizar hilos para organizar el archivo, se pueden realizar múltiples partes del ordenamiento de forma simultánea en diferentes hilos de ejecución. Esto permite aprovechar mejor los recursos de procesamiento disponibles, distribuyendo la carga de trabajo entre varios núcleos de procesador si están disponibles.
+
+**Aprovechamiento de Múltiples Núcleos de Procesamiento:** Cuando se utilizan hilos, el sistema puede distribuir las tareas de procesamiento entre múltiples núcleos de la CPU (si están disponibles). Esto puede resultar en un rendimiento más eficiente y en tiempos de procesamiento más rápidos, especialmente para operaciones intensivas en términos de CPU como el ordenamiento.
+
+11. **Confirmación de la ordenación**: Una vez que el archivo ha sido ordenado, el sistema le informará que la ordenación se ha completado con éxito. También le proporcionará la ubicación del archivo ordenado en el directorio y el tiempo que tardó en ordenarlo.
