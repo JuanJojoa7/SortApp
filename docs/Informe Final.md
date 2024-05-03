@@ -164,7 +164,8 @@ Esta matriz de pruebas se ejecuta en un solo ordenador que crea los servidores y
 | Peso Archivo | Servidores | Local | 1 Servidor | 5 Servidor | 10 Servidor | 20 Servidor |
 |--------------|--------------|--------------| --------------|--------------|--------------| --------------|
 |  1 MB   |  Velocidad   |  56 Ms   | 294 Ms   | 312 Ms    | 342 Ms   | 372 Ms   |
-| 5 MB    |  Velocidad   |  194 Ms   | 490 Ms   | 470 Ms   | 452 Ms   | 679 Ms   |
-| 10 MB   |  Velocidad   |  429 Ms   | 871 Ms   | 595 Ms   | 665 Ms   | 726 Ms   |
-| 50 MB   |  Velocidad   |   2765 Ms  | 3888 Ms   | 2302 Ms    | 2339 Ms   | 3046 Ms   |
-| 100 MB  |  Velocidad   |  5537 Ms   | 7720 Ms   | 5803 Ms    | 5904 Ms   | 6223 Ms   |
+| 5 MB    |  Velocidad   |  337 Ms   | 423 Ms   | 413 Ms   | 390 Ms   | 713 Ms   |
+| 10 MB   |  Velocidad   |  681 Ms   | 863 Ms   | 742 Ms   | 582 Ms   | 644 Ms   |
+| 50 MB   |  Velocidad   |  4207 Ms  | 3230 Ms   | 2212 Ms    | 2020 Ms   | 1960 Ms   |
+| 100 MB  |  Velocidad   |  8740 Ms   | 11239 Ms   | 8097 Ms    | 6851 Ms   | 6944 Ms   |
+
