@@ -152,3 +152,15 @@ Aquí están los pasos pulidos para ejecutar el programa:
 **Aprovechamiento de Múltiples Núcleos de Procesamiento:** Cuando se utilizan hilos, el sistema puede distribuir las tareas de procesamiento entre múltiples núcleos de la CPU (si están disponibles). Esto puede resultar en un rendimiento más eficiente y en tiempos de procesamiento más rápidos, especialmente para operaciones intensivas en términos de CPU como el ordenamiento.
 
 7. **Finalizacion de la ejecucion y salidas**: Una vez que el archivo ha sido ordenado, el sistema le informará que la ordenación se ha completado con éxito. También le proporcionará la ubicación del archivo ordenado en el directorio y el tiempo que tardó en ordenarlo tanto usando hilos como sin usar hilos, comprobando asi la hipotesis de que si usamos hilos el ordenamiento se hace de manera mas rapida.
+
+**Matriz de Pruebas**
+
+Esta matriz de pruebas se ejecuta en un solo ordenador que crea los servidores y manda el archivo por cliente. El limite de datos por division es 85,000 para esta matriz puede haber diferentes velocidades al editar este valor. Por ultimo el servidor local solo es la funcion mergesort con todos los datos sin division de trabajo para referencia.
+
+| Peso Archivo | Servidores | Local | 1 Servidor | 5 Servidor | 10 Servidor | 20 Servidor |
+|--------------|--------------|--------------| --------------|--------------|--------------| --------------|
+|  1 MB   |  Velocidad   |  56 Ms   | 294 Ms   | 312 Ms    | 342 Ms   | 372 Ms   |
+| 5 MB    |  Velocidad   |  194 Ms   | 490 Ms   | 470 Ms   | 452 Ms   | 679 Ms   |
+| 10 MB   |  Velocidad   |  429 Ms   | 871 Ms   | 595 Ms   | 665 Ms   | 726 Ms   |
+| 50 MB   |  Velocidad   |   2765 Ms  | 3888 Ms   | 2302 Ms    | 2339 Ms   | 3046 Ms   |
+| 100 MB  |  Velocidad   |  5537 Ms   | 7720 Ms   | 5803 Ms    | 5904 Ms   | 6223 Ms   |
