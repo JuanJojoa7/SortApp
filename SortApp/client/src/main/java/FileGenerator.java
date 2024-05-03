@@ -43,11 +43,17 @@ public class FileGenerator {
             System.out.println("Escribiendo en el archivo...");
             Random random = new Random();
             try (FileWriter writer = new FileWriter(file)) {
+                int commaCount = 0;
                 while (fileSizeInMB(FILE_NAME) < TARGET_SIZE_MB) {
                     for (int i = 0; i < STRING_LENGTH; i++) {
                         writer.write(CHARACTERS[random.nextInt(CHARACTERS.length)]);
                     }
                     writer.write(",");
+                    commaCount++;
+                    if (commaCount == 6) {
+                        writer.write(System.lineSeparator());
+                        commaCount = 0;
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();

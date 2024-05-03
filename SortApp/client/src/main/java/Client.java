@@ -1,5 +1,8 @@
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.Scanner;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -96,57 +99,53 @@ public class Client {
 
         List<String[]> dividedStrings = new ArrayList<>();
 
-        List<Thread> threads = new ArrayList<>();
+        ExecutorService executor = Executors.newFixedThreadPool(5);
 
         BlockingQueue<String[]> queue = new LinkedBlockingQueue<>(lists);
 
         startTime = System.currentTimeMillis();
 
         for (int port : ports) {
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try(com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args)) {
-                        com.zeroc.Ice.ObjectPrx base;
-                        if (localServers) {
-                            base = communicator.stringToProxy("SortingFile:tcp -h localhost -p " + port);
-                        } else {
-                            base = communicator.stringToProxy("SortingFile:tcp -h " + ips.get(ports.indexOf(port)) + " -p " + port);
-                        }
-
-                        Sorting.SortFilePrx sortProxy = Sorting.SortFilePrx.checkedCast(base);
-
-                        if(sortProxy == null) {
-                            throw new Error("Invalid proxy");
-                        }
-
-                        while (true) {
-                            String[] stringsToSort = queue.poll();
-                            if (stringsToSort == null) {
-                                break;
-                            }
-
-                            String[] sortedStrings = sortProxy.sortFileList(stringsToSort);
-
-                            dividedStrings.add(sortedStrings);
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
+            executor.submit(() -> {
+                try (com.zeroc.Ice.Communicator communicator = com.zeroc.Ice.Util.initialize(args)) {
+                    com.zeroc.Ice.ObjectPrx base;
+                    if (localServers) {
+                        base = communicator.stringToProxy("SortingFile:tcp -h localhost -p " + port);
+                    } else {
+                        base = communicator
+                                .stringToProxy("SortingFile:tcp -h " + ips.get(ports.indexOf(port)) + " -p " + port);
                     }
+
+                    Sorting.SortFilePrx sortProxy = Sorting.SortFilePrx.checkedCast(base);
+
+                    if (sortProxy == null) {
+                        throw new Error("Invalid proxy");
+                    }
+
+                    String[] stringsToSort;
+                    while ((stringsToSort = queue.poll()) != null) {
+                        String[] sortedStrings = sortProxy.sortFileList(stringsToSort);
+                        dividedStrings.add(sortedStrings);
+                    }
+
+                } catch (Exception e) {
+                    // Handle exception in a meaningful way
+                    e.printStackTrace();
                 }
             });
-            
-            thread.start();
-            threads.add(thread);
         }
 
-        for (Thread thread : threads) {
-            try {
-                thread.join();
-            } catch (InterruptedException e) {
-                System.out.println("Error al unir los hilos");
+        executor.shutdown();
+
+        try {
+            if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
+                executor.shutdownNow();
+                if (!executor.awaitTermination(60, TimeUnit.SECONDS))
+                    System.err.println("Pool did not terminate");
             }
+        } catch (InterruptedException ie) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
         }
 
         // Merge the divided strings
@@ -164,7 +163,7 @@ public class Client {
     }
 
     public static void setFileGenerator(FileGenerator fileGenerator) {
-        System.out.print("¿Deseas crear el archivo de números? (s/n): ");
+        System.out.print("¿Deseas crear el archivo de palabras? (s/n): ");
         String answer = input.nextLine();
         if (answer.equalsIgnoreCase("s")) {
             boolean response = fileGenerator.createFile();
