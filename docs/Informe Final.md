@@ -98,11 +98,11 @@ La relación entre la clase `Settings` y las clases `Client`, `Server` y `SortFi
    
 Aquí están los pasos pulidos para ejecutar el programa:
 
-4. **Inicializar la clase Cliente**: Al inicializar la clase cliente pedira al usuario crear servidores locales y se podra elegir cuantos servidores desea crear. Es importante destacar que cuanto más servidores locales se creen, menor será el tiempo que le tomará al programa organizar el archivo de datos. Esto se debe a que cada servidor puede procesar una parte del trabajo de manera independiente y simultánea, lo que aprovecha el paralelismo y acelera el proceso de organización del archivo.
+3. **Inicializar la clase Cliente**: Al inicializar la clase cliente pedira al usuario crear servidores locales y se podra elegir cuantos servidores desea crear. Es importante destacar que cuanto más servidores locales se creen, menor será el tiempo que le tomará al programa organizar el archivo de datos. Esto se debe a que cada servidor puede procesar una parte del trabajo de manera independiente y simultánea, lo que aprovecha el paralelismo y acelera el proceso de organización del archivo.
 
-6. **Creacion del archivo de datos**: Acto seguido se le pregunta al usuario si desea crear el archivo de numeros para posteriormente organizarlo, en caso de no querer crear uno nuevo usara el que este en el directorio.
+4. **Creacion del archivo de datos**: Acto seguido se le pregunta al usuario si desea crear el archivo de numeros para posteriormente organizarlo, en caso de no querer crear uno nuevo usara el que este en el directorio.
 
-7. **Ordenamiento Sin Hilos**: Despues de ingresar las entradas descritas anteriormente, el programa empezara a ordenar el archivo creado sin hilos, y dejando el tiempo de ejecucion que demora en consola para despues hacer la comparacion de tiempos usando hilos.
+5. **Ordenamiento Sin Hilos**: Despues de ingresar las entradas descritas anteriormente, el programa empezara a ordenar el archivo creado sin hilos, y dejando el tiempo de ejecucion que demora en consola para despues hacer la comparacion de tiempos usando hilos.
 
 **Ordenamiento sin Hilos (Secuencial)**
 
@@ -110,7 +110,7 @@ Aquí están los pasos pulidos para ejecutar el programa:
 
 **Utilización de un Solo Núcleo de Procesamiento:** En un entorno de ejecución secuencial, la tarea se ejecuta en un solo hilo de ejecución (generalmente en un solo núcleo de procesador). Esto puede limitar la cantidad de trabajo que se puede realizar simultáneamente, especialmente si el ordenamiento implica operaciones intensivas en términos de CPU.
 
-9. **Ordenamiento con hilos**: Despues de hacer el ordenamiento sin hilos, el programa empezara a ordenar el archivo creado con hilos, y dejando el tiempo de ejecucion que demora en consola para despues hacer la comparacion de tiempos sin usar hilos.
+6. **Ordenamiento con hilos**: Despues de hacer el ordenamiento sin hilos, el programa empezara a ordenar el archivo creado con hilos, y dejando el tiempo de ejecucion que demora en consola para despues hacer la comparacion de tiempos sin usar hilos.
 
 **Ordenamiento con Hilos (Paralelo)**
 
@@ -118,4 +118,4 @@ Aquí están los pasos pulidos para ejecutar el programa:
 
 **Aprovechamiento de Múltiples Núcleos de Procesamiento:** Cuando se utilizan hilos, el sistema puede distribuir las tareas de procesamiento entre múltiples núcleos de la CPU (si están disponibles). Esto puede resultar en un rendimiento más eficiente y en tiempos de procesamiento más rápidos, especialmente para operaciones intensivas en términos de CPU como el ordenamiento.
 
-11. **Finalizacion de la ejecucion y salidas**: Una vez que el archivo ha sido ordenado, el sistema le informará que la ordenación se ha completado con éxito. También le proporcionará la ubicación del archivo ordenado en el directorio y el tiempo que tardó en ordenarlo tanto usando hilos como sin usar hilos, comprobando asi la hipotesis de que si usamos hilos el ordenamiento se hace de manera mas rapida.
+7. **Finalizacion de la ejecucion y salidas**: Una vez que el archivo ha sido ordenado, el sistema le informará que la ordenación se ha completado con éxito. También le proporcionará la ubicación del archivo ordenado en el directorio y el tiempo que tardó en ordenarlo tanto usando hilos como sin usar hilos, comprobando asi la hipotesis de que si usamos hilos el ordenamiento se hace de manera mas rapida.
