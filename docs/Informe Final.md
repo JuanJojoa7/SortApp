@@ -89,20 +89,25 @@ La relación entre la clase `SortFileI` y las clases `Client` y `Server` es que 
 
 La relación entre la clase `Settings` y las clases `Client`, `Server` y `SortFileI` podría ser que `Settings` proporciona la configuración que `Client` y `Server` utilizan para establecer la conexión. Por ejemplo, `Client` podría utilizar el número de nodos para determinar cuántos servidores se deben conectar y el puerto para establecer la conexión. `Server` podría utilizar el puerto para escuchar las solicitudes entrantes. 
   
-## Instrucciones de Uso Ejecucion Local
+## Instrucciones de Uso y explicacion de las salidas: Ejecucion Local
 
 ![image](https://github.com/JuanJojoa7/SortApp/assets/110687384/81938b6a-52eb-4257-9aa3-4ef81efaed7d)
 
 1. Clona este repositorio en tu máquina local.
 2. Importa el proyecto en tu entorno de desarrollo Java preferido.
+   
 Aquí están los pasos pulidos para ejecutar el programa:
 
-3. **Inicializar la clase Cliente**: Inicie cada servidor que actuará como un trabajador en el programa de ordenamiento. Asegúrese de asignar a cada servidor un puerto único que no esté en uso, en el rango de 10000 en adelante.
+4. **Inicializar la clase Cliente**: Al inicializar la clase cliente pedira al usuario crear servidores locales y se podra elegir cuantos servidores desea crear. Es importante destacar que cuanto más servidores locales se creen, menor será el tiempo que le tomará al programa organizar el archivo de datos. Esto se debe a que cada servidor puede procesar una parte del trabajo de manera independiente y simultánea, lo que aprovecha el paralelismo y acelera el proceso de organización del archivo.
 
-4. **Ejecutar el cliente**: Una vez que todos los servidores estén en funcionamiento, inicie el cliente. Durante la inicialización, el cliente le pedirá que introduzca los puertos que los servidores están utilizando.
+6. **Creacion del archivo de datos**: Acto seguido se le pregunta al usuario si desea crear el archivo de numeros para posteriormente organizarlo, en caso de no querer crear uno nuevo usara el que este en el directorio.
 
-5. **Crear un archivo de ordenamiento**: El cliente le preguntará si desea crear un nuevo archivo para ordenar. Si elige hacerlo, deberá especificar el tamaño del archivo en megabytes (MB). Si elige no crear un nuevo archivo, el sistema buscará un archivo existente para ordenar.
+7. **Ordenamiento Sin Hilos**: Despues de ingresar las entradas descritas anteriormente, el programa empezara a ordenar el archivo creado sin hilos, y dejando el tiempo de ejecucion que demora en consola para despues hacer la comparacion de tiempos usando hilos.
 
-6. **Ordenar el archivo**: El sistema creará el archivo (si eligió hacerlo) y luego procederá a ordenarlo utilizando los servidores que ha inicializado.
+  **Ordenamiento sin Hilos (Secuencial)**
+    Procesamiento Secuencial: Cuando el archivo se organiza sin utilizar hilos, el proceso es secuencial. Esto significa que cada paso del ordenamiento se realiza uno después del otro en una sola secuencia     de ejecución. Si el archivo es grande o la tarea es intensiva en términos de procesamiento, este enfoque puede llevar más tiempo porque cada operación debe completarse antes de pasar a la siguiente.
+    Utilización de un Solo Núcleo de Procesamiento: En un entorno de ejecución secuencial, la tarea se ejecuta en un solo hilo de ejecución (generalmente en un solo núcleo de procesador). Esto puede            limitar la cantidad de trabajo que se puede realizar simultáneamente, especialmente si el ordenamiento implica operaciones intensivas en términos de CPU.
 
-7. **Confirmación de la ordenación**: Una vez que el archivo ha sido ordenado, el sistema le informará que la ordenación se ha completado con éxito. También le proporcionará la ubicación del archivo ordenado en el directorio y el tiempo que tardó en ordenarlo.
+9. **Ordenamiento con hilos**: El sistema creará el archivo (si eligió hacerlo) y luego procederá a ordenarlo utilizando los servidores que ha inicializado.
+
+10. **Confirmación de la ordenación**: Una vez que el archivo ha sido ordenado, el sistema le informará que la ordenación se ha completado con éxito. También le proporcionará la ubicación del archivo ordenado en el directorio y el tiempo que tardó en ordenarlo.
