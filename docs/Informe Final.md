@@ -55,6 +55,22 @@ El código fuente está organizado de la siguiente manera:
 - `saveFile(String[] strings)`: Este método guarda las cadenas ordenadas en un archivo.
 
 La relación entre la clase `Client` y las clases `Settings`, `Server` y `SortFileI` podría ser que `Client` utiliza la configuración proporcionada por `Settings` para establecer la conexión con los servidores. `Client` envía las partes del archivo a `Server` para su ordenación. `Server` implementa la interfaz `SortFileI` para proporcionar el servicio de ordenación. 
+
+## **FileGenerator.java**:
+La clase `FileGenerator` tiene como propósito principal es generar un archivo con cadenas de texto aleatorias. Aquí está el desglose de cada método:
+
+- `FileGenerator(String fileName)`: Este es el constructor de la clase. Acepta un nombre de archivo como parámetro y lo asigna a la variable `FILE_NAME`.
+
+- `createFile()`: Este método crea un archivo con el nombre especificado en `FILE_NAME` si no existe ya. Si el archivo se crea con éxito, escribe cadenas de texto aleatorias en él hasta que el tamaño del archivo alcanza un tamaño objetivo (100 MB en este caso). Las cadenas de texto aleatorias se generan utilizando los caracteres en el array `CHARACTERS` y tienen una longitud de 10 caracteres. Después de cada 6 cadenas, se añade una nueva línea. Si ocurre algún error durante la creación del archivo o la escritura en él, se imprime la traza de la pila del error. El método devuelve `true` si el archivo se creó con éxito y `false` en caso contrario.
+
+- `fileSizeInMB(String fileName)`: Este es un método privado que acepta un nombre de archivo como parámetro y devuelve el tamaño del archivo en megabytes. Se utiliza en el método `createFile()` para comprobar si el tamaño del archivo ha alcanzado el tamaño objetivo.
+
+## **LocalMergeSort.java**:
+La clase `LocalMergeSort` tiene como propósito principal es ordenar un array de cadenas de texto utilizando el algoritmo de ordenamiento por mezcla (merge sort). Aquí está el desglose de cada método:
+
+- `mergeSort(String[] arr)`: Este es el método principal que realiza el ordenamiento por mezcla. Acepta un array de cadenas de texto como parámetro. Si la longitud del array es 1 o menos, no se necesita ordenar, por lo que el método simplemente retorna. Si la longitud del array es mayor que 1, el array se divide en dos mitades, `leftHalf` y `rightHalf`. Luego, el método se llama a sí mismo recursivamente para ordenar cada mitad. Finalmente, las dos mitades ordenadas se combinan utilizando el método `merge()`.
+
+- `merge(String[] arr, String[] left, String[] right)`: Este es un método privado que combina dos arrays ordenados en un solo array ordenado. Acepta tres arrays como parámetros: `arr` es el array en el que se almacenará el resultado, y `left` y `right` son los dos arrays ordenados que se van a combinar. El método utiliza tres índices para rastrear la posición actual en `arr`, `left` y `right`. En cada iteración del bucle, se compara el elemento actual en `left` y `right`, y el menor de los dos se copia en `arr`. Si se agotan los elementos en `left` o `right`, los elementos restantes del otro array se copian en `arr`.
   
 ## **Server.java**:
   La clase `Server` en este código es un servidor que se ejecuta en un puerto específico y espera las solicitudes de los clientes para ordenar las cadenas de texto. Aquí está la explicación detallada:
